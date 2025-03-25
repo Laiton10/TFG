@@ -1,0 +1,63 @@
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 300px;
+
+}
+
+.infoTitulo{
+    font-size: 40px;
+    width: 60%;
+    text-align: center;
+    line-height: 60px;
+}
+
+.registrar{
+    margin-left: 200px;
+    padding-top: 20px;
+}
+
+.inputCorreo{
+    background-color: var(--color-bg-register);
+    width: 25%;
+    padding: 15px 20px;
+    border-radius: 5px 0 0 5px;
+    border: none;
+    font-size: 16px;
+    margin-left: 35px;
+}
+
+.inputCorreo::placeholder{
+    color: var(--color-placeholder);
+}
+
+.inputCorreo:focus{
+    outline: none;
+    color: blanchedalmond;
+}
+
+.botonSuscribir{
+    background-color: var(--color-boton);
+    width: 17%;
+    padding: 15px 20px;
+    border-radius: 0 5px 5px 0;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px; 
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.botonSuscribir:hover{
+    background-color: var(--color-border);
+}
+
+.subtitulo{
+    font-size: 16px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding-left: 50px;
+}

@@ -1,0 +1,15 @@
+@import 'styles/color-palette.css';
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+*{
+  font-family: 'Poppins', sans-serif; 
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+}

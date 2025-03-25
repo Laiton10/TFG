@@ -1,0 +1,29 @@
+.footer{
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-bg-footer);
+    padding: 10px;
+}
+
+p{
+    color: var(--color-text);
+    margin-left: 100px;
+}
+
+.linksFooter{
+    display: flex;
+    gap: 30px;
+    list-style: none;   
+    margin-right: 30px;
+}
+
+.linksFooter a{
+    text-decoration: none;
+    color: var(--color-hover);
+}
+
+.linksFooter a:hover{
+    text-decoration: underline;
+}
