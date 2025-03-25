@@ -10,7 +10,7 @@ function Principal() {
 
             <div className='registrar'>
                 <input type="email" placeholder="Introduce tu nombre y tus apellidos" className="inputCorreo" />
-                <button className="botonSuscribir">REGÍSTRATE YA</button>
+                <button className="botonSuscribir">REGÍSTRATE</button>
             </div>
            
             <div className="suscripcion">
