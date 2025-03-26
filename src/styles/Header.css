@@ -39,7 +39,11 @@
 }
 
 .inicioSesion{
-    margin-right: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3em;
+    margin-right: 3em;
     margin-bottom: 10px;
 }
 
@@ -56,6 +60,45 @@
 .inicioSesion a:hover{
     color: var(--color-hover);
 }
+
+.saludoUsuario{
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 1em;
+    border: 0.1em solid var(--color-border);
+}
+
+.imagenMenu{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.iconoUsuario{
+    height: 4em;
+}
+
+.menuDesplegable {
+    position: absolute; 
+    top: 100%; 
+    left: -40px;
+}
+  
+  .menuDesplegable ul {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+  }
+  
+  .menuDesplegable ul li {
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .menuDesplegable ul li a{
+    font-size: 0.5em;
+  }
+
 
 @media (max-width: 1313px){
     .logo{

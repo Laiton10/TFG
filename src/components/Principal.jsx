@@ -21,6 +21,6 @@ function Principal() {
      
     </div>
   )
-}
+} 
 
 export default Principal

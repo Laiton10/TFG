@@ -5,12 +5,19 @@ import { Link } from 'react-router-dom';
 import '../styles/Header.css'
 
 function Header({user}) {
-  const [links, setLinks] = useState([]);
-  
+  const [links, setLinks] = useState({});
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const clickMouse = () => {
+    setIsMenuOpen((prevState) => !prevState);
+  }
+
+
   useEffect(() => {
     const linkObject = principalData[0];
     setLinks(linkObject);
   }, []);
+
 
   return (
     <div>
@@ -26,7 +33,31 @@ function Header({user}) {
           </div>
          
         <div className="inicioSesion">
-          {user ? <p className='saludoUsuario'>¡Hola, {user}!</p> : <Link to="/login">Iniciar Sesión</Link>}
+        {user ? 
+          <> {/* Es necesario un fragmento, xq hay varios elementos JSX */}
+            <p className="saludoUsuario">¡Hola, {user}!</p> 
+            <div className="imagenMenu"onClick={clickMouse}>
+              <img
+                src="/account.svg"
+                alt="Icono de usuario" 
+                className="iconoUsuario"
+                
+              />
+            
+            
+        {isMenuOpen &&  // Muestra el menú si isMenuOpen es true, gracias a && que evalúa la segunda parte si la primera es true
+            <div className="menuDesplegable">
+              <ul>
+                <li><Link to="/perfil">Mi Perfil</Link></li>
+                <li><Link to="/configuracion">Configuración</Link></li>
+              </ul>
+            </div>
+        }
+            </div>
+          </>
+ : 
+  <Link to="/login">Iniciar Sesión</Link>
+}
         </div>
         </nav>
     </div>

@@ -1,0 +1,41 @@
+.containerLogin{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    padding: 3%;
+    margin-top: 3em;
+}
+
+.nickname, .password{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5em;
+    color: var(--color-text);
+}
+
+#nickname, #password{
+    width: 100%;
+    height: 3em;
+    border-radius: 0.5em;
+    border: 0.2em solid var(--color-border);
+    padding: 0.5em;
+
+}
+
+#nickname:focus {
+    outline: none;
+}
+
+.botonLogin{
+    width: 50%;
+    border-color: var(--color-border);
+    background-color: transparent;
+    padding: 0.5em;
+    margin-left: 5em;
+    margin-top: 1em;
+}
