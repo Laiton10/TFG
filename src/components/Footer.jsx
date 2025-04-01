@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../styles/Footer.css'
 
 function Footer() {
+
   return (
     <div className='footer'>
        <p>&copy; 2025 FilMe. Todos los derechos reservados.</p>
