@@ -1,0 +1,99 @@
+.profile-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    min-width: 60%;
+    background-color: #1a1f2b;
+    border-radius: 8%;
+    margin-bottom: 3rem;
+}
+
+hr{
+    width: 70%;
+}
+
+.perfil{
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.title{   
+    margin: 0;
+    padding: 0; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title p{
+    font-size: 2em;
+    margin: 0;
+    padding: 0;
+}
+
+.circulo {
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; 
+    border: 3px solid var(--color-border);
+    background-color: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 2em; 
+}
+
+.circulo p{
+    margin: 0;
+    padding: 0;
+    color: var(--color-border);
+}
+
+.info{  
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    font-size: 1em;  
+    margin-top: 1rem;
+}
+
+.info:last-child{
+    margin-bottom: 1rem;
+}
+
+label {
+    font-weight: bold;  
+    color: var(--color-hover);  
+    margin-bottom: 5px;  
+}
+
+#nombreUsuario, #email, #fecha_registro, #prueba {
+    background-color: #252a34; 
+    color: var(--color-text);  
+    font-size: 1.2em;  
+    text-align: center;
+    padding: 10px;  
+    margin: 5px 0;  
+    border: 2px solid var(--color-border);  
+    border-radius: 8px;  
+    width: 100%;  
+    max-width: 300px; 
+    transition: all 0.3s ease-in-out;  
+}
+
+#nombreUsuario:hover, #email:hover, #fecha_registro:hover, #prueba:hover {
+    border-color: var(--color-hover);  
+    box-shadow: 0 0 10px rgba(245, 197, 24, 0.5); 
+}
+
+#nombreUsuario:focus, #email:focus, #fecha_registro:focus, #prueba:focus {
+    outline: none;  
+    border-color: var(--color-hover);
+}
+

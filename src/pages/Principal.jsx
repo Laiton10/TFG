@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import dato from '../data/principal2.json'
-import '../styles/Principal.css'
+import '../styles/pages/Principal.css'
+import { Link } from 'react-router-dom';
 
 function Principal() {
    return (
@@ -9,8 +10,8 @@ function Principal() {
             <p className='infoTitulo'>{dato.first.title}{dato.first.titleText}</p>
 
             <div className='registrar'>
-                <input type="email" placeholder="Introduce tu nombre y tus apellidos" className="inputCorreo" />
-                <button className="botonSuscribir">REGÍSTRATE</button>
+                <input type="email" placeholder="Haz click para registrarte" className="inputCorreo" readOnly />
+                <Link to='/register'><button className="botonSuscribir">REGÍSTRATE</button></Link>
             </div>
            
             <div className="suscripcion">

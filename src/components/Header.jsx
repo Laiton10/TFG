@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import logo from '../resources/FilMe-removebg-preview.png'
 import principalData from '../data/principal.json'
 import { Link, useLocation } from 'react-router-dom';
-import '../styles/Header.css'
+import '../styles/components/Header.css'
 
 function Header({user}) {
   const [links, setLinks] = useState({});

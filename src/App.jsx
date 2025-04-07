@@ -1,9 +1,11 @@
 import { use, useState, useEffect } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer';
-import Principal from './components/Principal';
-import Login from './components/Login';
-import Perfil from './components/Perfil';
+import Principal from './pages/Principal';
+import Login from './pages/Login';
+import Perfil from './pages/Perfil';
+import Populares from './pages/Populares';
+import Register from './pages/Register';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
@@ -25,6 +27,8 @@ function App() {
         <Route path="/" element={<Principal/>}/>
         <Route path="/login" element={<Login handleLogin={handleLogin}/>}/>
         <Route path="/perfil" element={<Perfil user={user} />} />
+        <Route path='/populares'/>
+        <Route path='/register' element={<Register/>}/>
       </Routes>
       <Footer/>
     </>
