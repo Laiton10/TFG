@@ -5,6 +5,7 @@
     justify-content: space-between;
     background-color: var(--color-bg-footer);
     padding: 10px;
+    overflow: hidden;
 }
 
 p{
@@ -28,8 +29,3 @@ p{
     text-decoration: underline;
 }
 
-@media (max-width: 897px) {
-    .footer{
-        margin-top: auto;
-    }
-}
