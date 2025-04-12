@@ -1,4 +1,4 @@
-.content{
+    .content{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -101,13 +101,12 @@
    }
 
    .inputCorreo{
-        width: 70%;
-        text-align: center;
+       display: none;
    }
 
    .botonSuscribir{
-        width: 70%;
-        margin-left: 60px;
+        width: 75%;
+        margin-bottom: 2rem;
    }
 }
 

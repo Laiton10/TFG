@@ -117,6 +117,85 @@
   }
 
 
+  /**/
+  #responsive-nav-icon {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+    display: none; /* Solo visible en responsive */
+    cursor: pointer;
+    z-index: 1001;
+  }
+  
+  /* Las 3 barritas */
+  .bar1, .bar2, .bar3 {
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: all 0.4s ease;
+  }
+  
+  /* Cuando el menú está abierto, animación a X */
+  #responsive-nav-icon.open .bar1 {
+    transform: translateY(8px) rotate(-45deg);
+  }
+  
+  #responsive-nav-icon.open .bar2 {
+    opacity: 0;
+  }
+  
+  #responsive-nav-icon.open .bar3 {
+    transform: translateY(-8px) rotate(45deg);
+  }
+  
+  /* Menú lateral oculto por defecto */
+  #responsive-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: var(--color-bg-footer);
+    padding: 3rem 2rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  
+  /* Mostrado cuando está abierto */
+  #responsive-nav.visible {
+    transform: translateX(0);
+  }
+  
+  /* Oculto cuando está cerrado */
+  #responsive-nav.hidden {
+    transform: translateX(-100%);
+  }
+  
+  /* Estilos del menú lateral */
+  #responsive-nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0;
+  }
+  
+  .responsive-header-link {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .responsive-header-link:hover {
+    color: var(--color-hover);
+  }
+
+
 @media (max-width: 1313px){
     .logo{
         height: 100px;
@@ -155,29 +234,28 @@
     }
 }
 
-@media (max-width: 823px){
-    .inicioSesion a{
-        padding: 8px;
-    }
-
-    .nav-links{
-        gap: 20px;
-    }
-
-    .logoLinks{
-        gap: 20px;
-        margin-left: 0;
-    }
-}
-
-@media (max-width: 669px){
-    .nav-links{
+@media (max-width: 900px){
+    .nav-links {
         display: none;
     }
 
-    .inicioSesion{
+    .inicioSesion {
         margin-top: 20px;
         margin-right: 20px;
     }
+
+     #responsive-nav-icon {
+    display: inline-block;
+  }
+  .nav-links {
+    display: none !important;
+  }
+
 }
+
+
+
+
+
+
 

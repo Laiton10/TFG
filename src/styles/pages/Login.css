@@ -46,11 +46,40 @@ form{
 }
 
 .botonLogin{
-    width: 10%;
+    width: 150px;
     border-color: var(--color-border);
     background-color: transparent;
     padding: 1rem;
     margin-top: 1rem;
+    margin-bottom: 2    rem;
     border-radius: 0.5rem;
     color: var(--color-text);
+}
+
+
+@media(max-width: 815px){
+    .password, .nickname{
+        width: 70%;
+    }
+    .botonLogin{
+        width: 120px;
+    }
+}
+
+@media(max-width: 500px){
+    .password .nickname{
+        width: 70%;
+    }
+    .botonLogin{
+        width: 110px;
+    }
+}
+
+@media(max-width: 450px){
+    .password .nickname{
+        width: 80%;
+    }
+    .botonLogin{
+        width: 110px;
+    }
 }
