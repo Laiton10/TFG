@@ -29,3 +29,36 @@ p{
     text-decoration: underline;
 }
 
+@media (max-width: 721px) {
+    .footer-text {
+      margin-left: 0.05rem;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .footer {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0.1rem;
+      gap: 0.1rem;
+    }
+  
+    .footer-text {
+      font-size: 0.9rem;
+    }
+  
+    .linksFooter {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px; 
+      margin: -5px 0 0 10px;    
+    }
+  
+    .linksFooter a {
+       font-size: 0.9rem;
+    }   
+  }
+
+
+  
+

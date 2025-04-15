@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import dato from '../data/principal2.json'
-import '../styles/pages/Principal.css'
+import React from 'react';
+import dato from '../data/principal2.json';
+import '../styles/pages/Principal.css';
 import { Link } from 'react-router-dom';
 
-function Principal() {
-   return (
+function Principal({ user }) {
+  return (
     <div className='content'>
-        <div className='titulo'>
-            <p className='infoTitulo'>{dato.first.title}{dato.first.titleText}</p>
+      <div className='titulo'>
+        <p className='infoTitulo'>{dato.first.title}{dato.first.titleText}</p>
+        {!user && (
+          <div className='registrar'>
+            <input type="email" placeholder="Haz click para registrarte" className="inputCorreo" readOnly />
+            <Link to='/register'>
+              <button className="botonSuscribir">REGÍSTRATE</button>
+            </Link>
+          </div>
+        )}
 
-            <div className='registrar'>
-                <input type="email" placeholder="Haz click para registrarte" className="inputCorreo" readOnly />
-                <Link to='/register'><button className="botonSuscribir">REGÍSTRATE</button></Link>
-            </div>
-           
-            <div className="suscripcion">
-                <p className='subtitulo'>{dato.second.subtitle}</p>
-                <p className='textoSubtitulo'>{dato.second.subtitleText}</p>
-            </div>
+        <div className="suscripcion">
+          <p className='subtitulo'>{dato.second.subtitle}</p>
+          <p className='textoSubtitulo'>{dato.second.subtitleText}</p>
         </div>
-     
+      </div>
     </div>
-  )
-} 
+  );
+}
 
-export default Principal
+export default Principal;

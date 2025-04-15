@@ -24,7 +24,7 @@ function App() {
     <>
       <Header user={user}/>
       <Routes>
-        <Route path="/" element={<Principal/>}/>
+        <Route path="/" element={<Principal user={user} />} />
         <Route path="/login" element={<Login handleLogin={handleLogin}/>}/>
         <Route path="/perfil" element={<Perfil user={user} />} />
         <Route path='/populares' element={<Populares/>}/>
