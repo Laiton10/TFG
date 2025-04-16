@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../resources/FilMe-removebg-preview.png'
 import principalData from '../data/principal.json'
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/components/Header.css'
 
 function Header({user}) {
   const [links, setLinks] = useState({});
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const clickMouse = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -19,6 +20,13 @@ function Header({user}) {
     setLinks(linkObject);
   }, []);
 
+  const handleLinkClick = (e, route) => {
+      if(!user && route.toLowerCase() !== ''){
+        e.preventDefault();
+        navigate('/login');
+      }
+  };
+
 
   return (
     <div>
@@ -28,7 +36,7 @@ function Header({user}) {
              <ul className='nav-links'>
             {console.log(Object.keys(links))}  
             {Object.keys(links).map((key) => (
-              <li key={key}><Link to={`/${key}`}>{links[key]}</Link></li>
+              <li key={key}><Link onClick={(e) => handleLinkClick(e,key) } to={`/${key}`}>{links[key]}</Link></li>
             ))}
           </ul>
           </div>
