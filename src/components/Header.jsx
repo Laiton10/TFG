@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../resources/FilMe-removebg-preview.png';
 import principalData from '../data/principal.json';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/components/Header.css';
 
 function Header({ user }) {
@@ -9,6 +9,7 @@ function Header({ user }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuResponsiveAbierto, setMenuResponsiveAbierto] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const clickMouse = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -22,6 +23,13 @@ function Header({ user }) {
     const linkObject = principalData[0];
     setLinks(linkObject);
   }, []);
+
+  const handleLinkClick = (e, route) => {
+    if(!user && route.toLowerCase() !== ''){
+      e.preventDefault();
+      navigate('/login');
+    }
+};
 
   return (
     <>
@@ -69,11 +77,9 @@ function Header({ user }) {
           <div className="logoLinks">
             <img className="logo" src={logo} alt="logo" />
             <ul className="nav-links">
-              {Object.keys(links).map((key) => (
-                <li key={key}>
-                  <Link to={`/${key}`}>{links[key]}</Link>
-                </li>
-              ))}
+            {Object.keys(links).map((key) => (
+              <li key={key}><Link onClick={(e) => handleLinkClick(e,key) } to={`/${key}`}>{links[key]}</Link></li>
+            ))}
             </ul>
           </div>
 
