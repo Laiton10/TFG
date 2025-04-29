@@ -8,6 +8,7 @@ import Populares from './pages/Populares';
 import Register from './pages/Register';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { getTopMovies } from './services/movie.service';
 
 
 function App() {
@@ -19,6 +20,16 @@ function App() {
     setUser(user);
     setPassword(password)
   }
+
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const movies = await getTopMovies();
+      console.log("Películas:", movies);
+    };
+
+    fetchMovies();
+  }, []);
 
   return(
     <>
