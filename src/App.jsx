@@ -40,6 +40,7 @@ function App() {
         <Route path="/perfil" element={<Perfil user={user} />} />
         <Route path='/populares' element={<Populares/>}/>
         <Route path='/register' element={<Register/>}/>
+     
       </Routes>
       <Footer/>
     </>

@@ -6,6 +6,7 @@
   function Populares() {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
       const fetchMovies = async () => {
@@ -32,6 +33,10 @@
       fetchMovies();
     }, []);
 
+    const filteredMovies = movies.filter((movie) =>
+      movie.primaryTitle.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+
     if (loading) {
       return (
         <div className="loading">
@@ -41,10 +46,20 @@
     }
 
     return (
-      <div className='image-grid'>
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
+      <div>
+        <div className='search-bar'>
+          <input
+            type="text"
+            placeholder="&#128270; Buscar película..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <div className='image-grid'>
+          {filteredMovies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </div>
       </div>
     );
   }
