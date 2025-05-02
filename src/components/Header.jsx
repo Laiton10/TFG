@@ -4,7 +4,7 @@ import principalData from '../data/principal.json';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/components/Header.css';
 
-function Header({ user }) {
+function Header({ token }) {
   const [links, setLinks] = useState({});
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuResponsiveAbierto, setMenuResponsiveAbierto] = useState(false);
@@ -25,7 +25,7 @@ function Header({ user }) {
   }, []);
 
   const handleLinkClick = (e, route) => {
-    if(!user && route.toLowerCase() !== ''){
+    if(!token && route.toLowerCase() !== ''){
       e.preventDefault();
       navigate('/login');
     }
@@ -57,7 +57,7 @@ function Header({ user }) {
               </Link>
             </li>
           ))}
-          {user && (
+          {token && (
             <li>
               <Link
                 to="/ajustes"
@@ -84,7 +84,7 @@ function Header({ user }) {
           </div>
 
           <div className="inicioSesion">
-            {user ? (
+            {token ? (
               <>
                 <div className="imagenMenu" onClick={clickMouse}>
                   <img

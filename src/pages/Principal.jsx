@@ -3,12 +3,12 @@ import dato from '../data/principal2.json';
 import '../styles/pages/Principal.css';
 import { Link } from 'react-router-dom';
 
-function Principal({ user }) {
+function Principal({ token }) {
   return (
     <div className='content'>
       <div className='titulo'>
         <p className='infoTitulo'>{dato.first.title}{dato.first.titleText}</p>
-        {!user && (
+        {!token && (
           <div className='registrar'>
             <input type="email" placeholder="Haz click para registrarte" className="inputCorreo" readOnly />
             <Link to='/register'>

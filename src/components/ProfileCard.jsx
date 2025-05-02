@@ -3,9 +3,9 @@ import "../styles/components/Profile-Card.css";
 export const ProfileCard = ({user}) => {
 
     const userInfo = [
-        { label: 'Nickname', id: 'nombreUsuario', value: user}, //pongo el prop user como value
-        { label: 'Email', id: 'email', value: 'email'},
-        { label: 'Fecha de registro en la aplicación', id: 'fecha_registro', value: 'fecha'},
+        { label: 'Nickname', id: 'nombreUsuario', value: user.nickname}, //pongo el prop user como value
+        { label: 'Email', id: 'email', value: user.email},
+        { label: 'Fecha de registro en la aplicación', id: 'fecha_registro', value: user.fechaRegistro},
         { label: 'Prueba', id: 'prueba', value: 'prueba'},
     ]
 
@@ -13,7 +13,7 @@ export const ProfileCard = ({user}) => {
     <div className="profile-card">
         <div className='perfil'>
             <div className='circulo'>
-                <p>{user.charAt(0)}</p>
+                <p>{user.nickname.charAt(0).toUpperCase()}</p>
             </div>
             <div className='title'>
                 <p>Información Personal</p>

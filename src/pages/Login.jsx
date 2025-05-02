@@ -1,52 +1,52 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import '../styles/pages/Login.css'
+import { useNavigate } from 'react-router-dom';
+import { login } from '../services/usuario.service';
+import '../styles/pages/Login.css';
 
+function Login({setToken}) {
+  const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-function Login({handleLogin}) {
-
-        const[user, setUsername] = useState('');
-        const[password, setPassword] = useState('');
-        const navigate = useNavigate();
-
-        const handleSubmit = (e) => {
-            e.preventDefault();
-            console.log('Formulario enviado');
-            handleLogin({user, password});
-            navigate('/');
-
-        };
-
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const token = await login(nickname, password);
+    if (token) {
+      localStorage.setItem('token', token); 
+      setToken(token);
+      navigate('/');
+    } else {
+      alert('Credenciales incorrectas');
+    }
+  };
 
   return (
-    <div className='containerLogin'>
-        <form onSubmit={handleSubmit}>
-            <div className='nickname'>
-                <label htmlFor='nickname'>Nickname: </label>
-                <input
-                    type='text'
-                    id='nickname'
-                    placeholder='Introduce tu nickname'
-                    value={user}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <div className='password'>
-                <label htmlFor='password'>Password:</label>
-                <input
-                    type='password'
-                    id='password'
-                    placeholder='Introduce tu contraseña'
-                    value={password}
-                    onChange= {(e) => setPassword(e.target.value)}
-                />
-            </div>
-            <button className="botonLogin" type='submit'>Iniciar Sesión</button>
-            
-        </form>
-
+    <div className="containerLogin">
+      <form onSubmit={handleLogin}>
+        <div className="nickname">
+          <label htmlFor="nickname">Nickname:</label>
+          <input
+            type="text"
+            id="nickname"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            placeholder="Introduce tu nickname"
+          />
+        </div>
+        <div className="password">
+          <label htmlFor="password">Contraseña:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Introduce tu contraseña"
+          />
+        </div>
+        <button type="submit" className="botonLogin">Iniciar sesión</button>
+      </form>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
