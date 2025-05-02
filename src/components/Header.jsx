@@ -29,7 +29,14 @@ function Header({ token }) {
       e.preventDefault();
       navigate('/login');
     }
-};
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+    window.location.reload();
+  };
+
 
   return (
     <>
@@ -101,6 +108,9 @@ function Header({ token }) {
                         </li>
                         <li>
                           <Link to="/configuracion">Configuración</Link>
+                        </li>
+                        <li>
+                          <Link to="/login" onClick={handleLogout}>Cerrar Sesión</Link>
                         </li>
                       </ul>
                     </div>

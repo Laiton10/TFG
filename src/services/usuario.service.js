@@ -52,3 +52,24 @@ export const getUser= async() =>{
     return null;
   }
 }
+
+export const registerUser= async(user) =>{
+    try {
+       const response= await fetch(`${baseUrl}/register`,{
+         method: 'POST',
+         headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+       });
+       if(!response.ok){
+          throw new Error('Error al registrar el usuario');
+       }
+       const data = await response.json();
+       console.log(data);
+       return data; // usuario registrado
+    } catch (error) { 
+      console.error("Error al hacer el registro:", error);  
+      return null;
+    }
+}

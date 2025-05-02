@@ -24,20 +24,20 @@ function Login({setToken}) {
     <div className="containerLogin">
       <form onSubmit={handleLogin}>
         <div className="nickname">
-          <label htmlFor="nickname">Nickname:</label>
+          <label htmlFor="nicknameLogin">Nickname:</label>
           <input
             type="text"
-            id="nickname"
+            id="nicknameLogin"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
             placeholder="Introduce tu nickname"
           />
         </div>
         <div className="password">
-          <label htmlFor="password">Contraseña:</label>
+          <label htmlFor="passwordLogin">Contraseña:</label>
           <input
             type="password"
-            id="password"
+            id="passwordLogin"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Introduce tu contraseña"

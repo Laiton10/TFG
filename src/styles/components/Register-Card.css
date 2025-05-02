@@ -39,7 +39,7 @@
     font-size: 1rem !important;
 }
 
-#nombre, #registerEmail, #contraseña{
+#nombre, #registerEmail, #contraseña, #nickname{
     background-color: #252a34; 
     color: var(--color-text);  
     font-size: 1.2em;  
@@ -54,15 +54,19 @@
     margin-bottom: 1rem;
 }
 
-#nombre:hover, #registerEmail:hover, #contraseña:hover{
+#nombre:hover, #registerEmail:hover, #contraseña:hover, #nickname:hover{
     border-color: var(--color-hover);  
     box-shadow: 0 0 10px rgba(245, 197, 24, 0.5); 
 }
 
-#nombre:focus, #registerEmail:focus, #contraseña:focus{
+#nombre:focus, #registerEmail:focus, #contraseña:focus, #nickname:focus{
     outline: none;  
     border-color: var(--color-hover); 
 }
+
+#nickname {
+    height: 30px;
+  }
 
 .register-button{
     width: 150px;
