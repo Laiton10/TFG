@@ -1,0 +1,53 @@
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .image-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .search-bar {
+    text-align: center;
+    margin: 1.5rem 0;
+  }
+  
+  .search-bar input {
+    padding: 1rem;
+    width: 40%;
+    font-size: 1rem;
+    border-radius: 10rem;
+    background-color: transparent;
+    color: var(--color-text) ;
+  }
+
+  .search-bar input::placeholder {
+    color: #fff;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+  }
+
+  .search-bar input:focus {
+    outline: none;
+    border: 2px solid var(--color-text);
+  }
+
+  .search-bar input:focus::placeholder {
+    opacity: 0.5;
+  }
+
+@media (max-width: 750px) {
+    .image-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .movie-title {
+        font-size: 0.8rem !important;
+    }
+    
+}
