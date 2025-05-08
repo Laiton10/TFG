@@ -1,5 +1,6 @@
 package org.example.tfgbackend.Services;
 
+import org.example.tfgbackend.DTO.NicknameUpdate;
 import org.example.tfgbackend.Model.Usuario;
 import org.example.tfgbackend.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,17 @@ public class UsuarioService {
         } else {
             return false;
         }
+    }
+
+    public boolean updateNickname(Integer id, String nickname) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
+        if(usuarioOptional.isPresent()) {
+            Usuario userActualizado= usuarioOptional.get();
+            userActualizado.setNickname(nickname);
+            usuarioRepository.save(userActualizado);
+            return true;
+        }
+        return false;
     }
 
     public boolean delete(Integer idUsuario){

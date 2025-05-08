@@ -73,3 +73,28 @@ export const registerUser= async(user) =>{
       return null;
     }
 }
+
+export const updateUser= async(user) =>{
+  try {
+    const response= await fetch(`${baseUrl}/nickname`,{
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    });
+
+    if(!response.ok){
+      throw new Error('Error al registrar el usuario');
+   }
+
+   const data = await response.text();
+   console.log(data);
+   return data;
+
+}catch(error){
+  console.error("Error al actualizar los datos:", error);  
+  return null;
+}
+
+}

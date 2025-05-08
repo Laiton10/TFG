@@ -1,37 +1,88 @@
+import { useState } from "react";
+import { updateUser } from "../services/usuario.service";
 import "../styles/components/Profile-Card.css";
 
 export const ProfileCard = ({user}) => {
 
-    const userInfo = [
-        { label: 'Nickname', id: 'nombreUsuario', value: user.nickname}, //pongo el prop user como value
-        { label: 'Email', id: 'email', value: user.email},
-        { label: 'Fecha de registro en la aplicación', id: 'fecha_registro', value: user.fechaRegistro},
+    const [nickname, setNickname] = useState(user.nickname);
+    const [mensaje, setMensaje] = useState(null);
+
+/*     const userInfo = [
+        { label: 'Nickname', id: 'nombreUsuario', value: user}, //pongo el prop user como value
+        { label: 'Email', id: 'email', value: 'email'},
+        { label: 'Fecha de registro en la aplicación', id: 'fecha_registro', value: 'fecha'},
         { label: 'Prueba', id: 'prueba', value: 'prueba'},
-    ]
+    ] */
+
+    const handleUpdate = async () => {
+        setMensaje(null);
+        const respuesta = await updateUser({ id: user.id, nickname });
+
+        if (respuesta) {
+            setMensaje("Nickname actualizado con éxito.");
+            setTimeout(() => setMensaje(null), 3000);
+          } else {
+            setMensaje("Error al actualizar el nickname.");
+            setTimeout(() => setMensaje(null), 3000);
+          }
+    };
+
+    const reset = () => {
+        setNickname(user.nickname);
+        setMensaje(null);
+    };
 
     return (
-    <div className="profile-card">
-        <div className='perfil'>
-            <div className='circulo'>
-                <p>{user.nickname.charAt(0).toUpperCase()}</p>
+        <>
+        <div className="profile-card">
+            <div className='perfil'>
+                <div className='circulo'>
+                    <p>{nickname.charAt(0).toUpperCase()}</p>
+                </div>
+                <div className='title'>
+                    <p>Información Personal</p>
+                </div>
             </div>
-            <div className='title'>
-                <p>Información Personal</p>
+            <hr />
+
+            <div className='info'>
+                <label htmlFor="nombreUsuario">Nickname</label>
+                <input
+                    type='text'
+                    id="nombreUsuario"
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                />
+            </div>
+
+            <div className='info'>
+                <label htmlFor="email">Email</label>
+                <input
+                    type='text'
+                    id="email"
+                    value={user.email}
+                    readOnly
+                />
+            </div>
+
+            <div className='info'>
+                <label htmlFor="fecha_registro">Fecha de registro</label>
+                <input
+                    type='text'
+                    id="fecha_registro"
+                    value={user.fechaRegistro}
+                    readOnly
+                />
+            </div>
+
+            <div className="acciones">
+                <button className="guardar" onClick={handleUpdate}>Guardar</button>
+                <button className="reset" onClick={reset}>Cancelar cambios</button>
             </div>
         </div>
-        <hr/>
-        {userInfo.map((info) =>(
-            <div className='info' key={info.id}>
-            <label htmlFor={info.id}>{info.label}</label>
-            <input
-                type='text'
-                id={info.id}
-                value={info.value}
-                readOnly
-            />
-            </div>
-        ))}
-        
-    </div>
+         {mensaje && (
+            <div className="mensaje-flotante">{mensaje}</div>
+          )}
+          </>
     );
-}
+};

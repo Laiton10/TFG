@@ -67,6 +67,44 @@ hr{
     margin-bottom: 1rem;
 }
 
+.acciones {
+    display: flex;
+    gap: 1.2rem;
+    padding: 2rem;
+}
+
+.guardar, .reset{
+    padding: 0.8rem 1.5rem;
+    font-size: 1em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.guardar{
+    background-color:  var(--color-bg-register);
+    color: var(--color-text);
+    border: 2px solid var(--color-border);
+}
+
+.guardar:hover {
+    background-color: var(--color-hover);
+    color: #000;
+    box-shadow: 0 0 10px rgba(245, 197, 24, 0.5);
+}
+
+.reset {
+    background-color:  var(--color-bg-register);
+    color: var(--color-text);
+    border: 2px solid var(--color-border);
+}
+
+.reset:hover{
+    background-color: var(--color-border);
+    box-shadow: 0 0 10px rgba(125, 0, 0, 0.5);
+}
+
 label {
     font-weight: bold;  
     color: var(--color-hover);  
@@ -96,4 +134,16 @@ label {
     outline: none;  
     border-color: var(--color-hover);
 }
+
+.mensaje-flotante {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-bg-register);
+    color: white;   
+    padding: 12px 20px;
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    box-shadow: 0 0 12px var(--color-hover);
+  }
 

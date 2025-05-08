@@ -2,6 +2,7 @@ package org.example.tfgbackend.Controllers;
 
 import jakarta.servlet.ServletRequest;
 import jakarta.validation.Valid;
+import org.example.tfgbackend.DTO.NicknameUpdate;
 import org.example.tfgbackend.Model.Usuario;
 import org.example.tfgbackend.Services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,17 @@ public class UsuarioController {
             usuarioService.update(usuario);
             return ResponseEntity.ok("Usuario actualizado");
         }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+    }
+
+    @PutMapping("/nickname")
+    public ResponseEntity<String> updateNickname(@RequestBody NicknameUpdate user) {
+        Optional<Usuario> usuarioOptional = usuarioService.findById(user.getId());
+        if (usuarioOptional.isPresent()) {
+            usuarioService.updateNickname(user.getId(), user.getNickname());
+            return ResponseEntity.ok("Nickname actualizado");
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
     }
