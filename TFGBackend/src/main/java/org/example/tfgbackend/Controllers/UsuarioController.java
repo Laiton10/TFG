@@ -46,6 +46,13 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/buscarUsuario")
+    public ResponseEntity<List<Usuario>> buscarUsuarios(@RequestParam String nickname) {
+        List<Usuario> resultados = usuarioService.findUser(nickname);
+        return ResponseEntity.ok(resultados);
+    }
+
+
     @PostMapping("/register")
     public ResponseEntity<Usuario> save(@Valid @RequestBody Usuario usuario) {
         return ResponseEntity.ok(usuarioService.save(usuario));
@@ -83,6 +90,7 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
     }
+
 
 
 

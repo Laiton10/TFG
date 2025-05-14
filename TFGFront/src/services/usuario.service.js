@@ -53,6 +53,31 @@ export const getUser= async() =>{
   }
 }
 
+export const searchUser = async (nickname) => {
+  try {
+    const response = await fetch(`${baseUrl}/buscarUsuario?nickname=${encodeURIComponent(nickname)}`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al buscar usuarios');
+    }
+
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error al buscar usuarios:", error);
+    return null;
+  }
+};
+
+
+
+
 export const registerUser= async(user) =>{
     try {
        const response= await fetch(`${baseUrl}/register`,{

@@ -30,7 +30,13 @@ public class UsuarioService {
     public Optional<Usuario> findByNickname(String nickname) {
         return usuarioRepository.findByNickname(nickname);
     }
-    
+
+    public List<Usuario> findUser(String nickname) {
+        return usuarioRepository.findUser(nickname);
+    }
+
+
+
     public Usuario save(Usuario usuario) {
         String hashedPassword = passwordEncoder.encode(usuario.getPassword());
         usuario.setPassword(hashedPassword);
