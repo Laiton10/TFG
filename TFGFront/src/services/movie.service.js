@@ -4,6 +4,9 @@ const TOP250_API = "https://imdb236.p.rapidapi.com/imdb/top250-movies";
 const API_HOST= "imdb236.p.rapidapi.com";
 const API_KEY = "f60e937c39msh852eeaf7064f519p10708ajsnc9589acdf850";
 
+const MOVIE_BY_TITLE = 'https://streaming-availability.p.rapidapi.com/shows/search/title?'
+const API_HOST2 = 'streaming-availability.p.rapidapi.com';
+
 export const getTopMovies = async () => {
     const options = {
         method: 'GET',
@@ -16,5 +19,24 @@ export const getTopMovies = async () => {
 
     const response = await axios.request(options);
     return response;
+};
+
+export const getMovieByTitle = async (title) => {
+    const options = {
+        method: 'GET',
+        url: `${MOVIE_BY_TITLE}country=ES&title=${encodeURIComponent(title)}`, // Corregimos el orden de los parámetros
+        headers: {
+            'x-rapidapi-host': API_HOST2, // Usamos el host correcto para esta API
+            'x-rapidapi-key': API_KEY
+        }
+    };
+
+    try {
+        const response = await axios.request(options);
+        return response.data; // Retornamos solo los datos relevantes
+    } catch (error) {
+        console.error("Error fetching movie by title:", error);
+        throw error; // Lanzamos el error para manejarlo en el llamado
+    }
 };
 

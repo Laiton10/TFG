@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Perfil from './pages/Perfil';
 import Populares from './pages/Populares';
 import Register from './pages/Register';
+import MovieDetail from './pages/MovieDetail';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { getTopMovies } from './services/movie.service';
@@ -40,6 +41,7 @@ function App() {
         <Route path="/perfil" element={<Perfil token={token} />} />
         <Route path='/populares' element={<Populares/>}/>
         <Route path='/register' element={<Register/>}/>
+        <Route path="/movie/:title" element={<MovieDetail/>} />
       </Routes>
       <Footer/>
     </>

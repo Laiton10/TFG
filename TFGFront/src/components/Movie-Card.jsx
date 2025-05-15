@@ -6,7 +6,7 @@ export const MovieCard = ({ movie }) => {
 
   return (
     <div className="movie-card">
-      <Link to={`/movie/${movie.id}`}>
+      <Link to={`/movie/${movie.primaryTitle}`}>
         <img src={image} alt={movie.primaryTitle} className="movie-poster" />
       </Link>
       <hr />

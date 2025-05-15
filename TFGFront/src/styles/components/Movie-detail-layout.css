@@ -1,0 +1,146 @@
+.pelicula {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+  margin: 60px auto 40px auto;
+  max-width: 1200px;
+  padding: 30px;
+  background-color: #0b0f1a;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+}
+
+.tituloPeli {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.tituloPeli h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 35px;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: bold;
+  background: linear-gradient(
+    90deg,
+    #fff8dc,
+    #ffcc00,
+    #d4af37,
+    #ffcc00,
+    #fff8dc
+  );
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes shine {
+  to {
+    background-position: -200% center;
+  }
+}
+
+.imagenPoster {
+  max-height: 550px;
+  width: 100%;
+  max-width: 360px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  object-fit: cover;
+}
+
+.infoPeli {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  font-size: 16px;
+  color: #e5e7eb;
+  line-height: 1.6;
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: 20px 25px;
+  border-radius: 16px;
+}
+
+.infoPeli p {
+  display: flex;
+  align-items: center;
+  gap: 2.5px; /* Espacio entre el icono y el texto */
+  margin: 0;
+  padding: 10px 14px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left: 5px solid #facc15;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  
+}
+
+.infoPeli svg {
+  min-width: 24px;
+  min-height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.infoPeli strong {
+  color: var(--color-text)
+  font-weight: 600;
+}
+
+.infoPeli span {
+  margin-right: 6px;
+  color: #facc15;
+  font-weight: bold;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #facc15;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .pelicula {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .tituloPeli h1 {
+    font-size: 28px;
+  }
+
+  .imagenPoster {
+    max-width: 80%;
+  }
+
+  .infoPeli {
+    width: 90%;
+  }
+}
+
+p.overview{
+    color: var(--color-text);
+}
