@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Perfil from './pages/Perfil';
 import Populares from './pages/Populares';
 import Register from './pages/Register';
+import Buscar from './pages/Buscar';
 import MovieDetail from './pages/MovieDetail';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -42,6 +43,7 @@ function App() {
         <Route path='/populares' element={<Populares/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path="/movie/:title" element={<MovieDetail/>} />
+        <Route path='/buscar' element={<Buscar/>}/>
       </Routes>
       <Footer/>
     </>
