@@ -1,5 +1,27 @@
 const baseUrl = 'http://localhost:8080/usuarios';
 
+export const registerUser= async(user) =>{
+    try {
+       const response= await fetch(`${baseUrl}/register`,{
+         method: 'POST',
+         headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+       });
+       if(!response.ok){
+          throw new Error('Error al registrar el usuario');
+       }
+       const data = await response.json();
+       console.log(data);
+       return data; // usuario registrado
+    } catch (error) { 
+      console.error("Error al hacer el registro:", error);  
+      return null;
+    }
+}
+
+
 export const login = async (nickname, password) => {
   try {
     const response = await fetch(`${baseUrl}/login`, {
@@ -53,9 +75,10 @@ export const getUser= async() =>{
   }
 }
 
-export const searchUser = async (nickname) => {
+
+export const searchUsers = async (nickname) => {
   try {
-    const response = await fetch(`${baseUrl}/buscarUsuario?nickname=${encodeURIComponent(nickname)}`, {
+    const response = await fetch(`${baseUrl}/buscarUsuarios?nickname=${encodeURIComponent(nickname)}`, {
       method: 'GET',
       headers: {
         "Content-Type": "application/json"
@@ -75,31 +98,31 @@ export const searchUser = async (nickname) => {
   }
 };
 
+export const searchUserByNickname = async (nickname) => {
+  try {
+    const response = await fetch(`${baseUrl}/byNickname?nickname=${encodeURIComponent(nickname)}`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
 
-
-
-export const registerUser= async(user) =>{
-    try {
-       const response= await fetch(`${baseUrl}/register`,{
-         method: 'POST',
-         headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
-       });
-       if(!response.ok){
-          throw new Error('Error al registrar el usuario');
-       }
-       const data = await response.json();
-       console.log(data);
-       return data; // usuario registrado
-    } catch (error) { 
-      console.error("Error al hacer el registro:", error);  
-      return null;
+    if (!response.ok) {
+      throw new Error('Error al buscar usuario');
     }
-}
 
-export const updateUser= async(user) =>{
+    const data = await response.json();
+    console.log("Usuario encontrado:", data);
+    return data;
+  } catch (error) {
+    console.error("Error al buscar usuario:", error);
+    return null;
+  }
+};
+
+
+
+export const updateNickname= async(user) =>{
   try {
     const response= await fetch(`${baseUrl}/nickname`,{
       method: 'PUT',

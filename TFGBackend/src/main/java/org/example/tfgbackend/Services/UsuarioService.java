@@ -35,7 +35,9 @@ public class UsuarioService {
         return usuarioRepository.findUser(nickname);
     }
 
-
+    public Optional<Usuario> findUserByNickname(String nickname) {
+        return usuarioRepository.findByNickname(nickname);
+    }
 
     public Usuario save(Usuario usuario) {
         String hashedPassword = passwordEncoder.encode(usuario.getPassword());

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { searchUser } from '../services/usuario.service';
+import {searchUsers } from '../services/usuario.service';
 import SearchUserCard from '../components/SearchUser-card';
 
 const Buscar = () => {
@@ -9,7 +9,7 @@ const Buscar = () => {
   useEffect(() => {
     const fetchUsuarios = async () => {
       if (searchTerm.length > 1) {
-        const resultado = await searchUser(searchTerm);
+        const resultado = await searchUsers(searchTerm);
         if (resultado) setUsuarios(resultado);
       } else {
         setUsuarios([]);

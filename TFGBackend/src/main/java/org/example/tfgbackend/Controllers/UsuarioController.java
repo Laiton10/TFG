@@ -46,10 +46,16 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/buscarUsuario")
+    @GetMapping("/buscarUsuarios")
     public ResponseEntity<List<Usuario>> buscarUsuarios(@RequestParam String nickname) {
         List<Usuario> resultados = usuarioService.findUser(nickname);
         return ResponseEntity.ok(resultados);
+    }
+
+    @GetMapping("/byNickname")
+    public ResponseEntity<Optional<Usuario>> buscarUserByNickname(@RequestParam String nickname) {
+        Optional<Usuario> user = usuarioService.findUserByNickname(nickname);
+        return ResponseEntity.ok(user);
     }
 
 
@@ -92,8 +98,7 @@ public class UsuarioController {
         }
     }
 
-
-
+    //AUTH METHODS:
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {

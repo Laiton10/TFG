@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { updateUser } from "../services/usuario.service";
+import { updateNickname } from "../services/usuario.service";
 import "../styles/components/Profile-Card.css";
 
 export const ProfileCard = ({user}) => {
@@ -16,7 +16,7 @@ export const ProfileCard = ({user}) => {
 
     const handleUpdate = async () => {
         setMensaje(null);
-        const respuesta = await updateUser({ id: user.id, nickname });
+        const respuesta = await updateNickname({ id: user.id, nickname });
 
         if (respuesta) {
             setMensaje("Nickname actualizado con éxito.");

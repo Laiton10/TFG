@@ -8,6 +8,7 @@ import Populares from './pages/Populares';
 import Register from './pages/Register';
 import Buscar from './pages/Buscar';
 import MovieDetail from './pages/MovieDetail';
+import PublicProfile from './pages/PublicProfile';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { getTopMovies } from './services/movie.service';
@@ -44,6 +45,7 @@ function App() {
         <Route path='/register' element={<Register/>}/>
         <Route path="/movie/:title" element={<MovieDetail/>} />
         <Route path='/buscar' element={<Buscar/>}/>
+        <Route path='/usuario/:nickname' element={<PublicProfile/>}/>
       </Routes>
       <Footer/>
     </>
