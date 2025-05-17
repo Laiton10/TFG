@@ -114,7 +114,7 @@ export const updateUser= async(user) =>{
    }
 
    const data = await response.text();
-   console.log(data);
+   localStorage.setItem("token", data);
    return data;
 
 }catch(error){

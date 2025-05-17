@@ -39,7 +39,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Principal token={token} />} />
         <Route path="/login" element={<Login setToken={setToken}/>}/>
-        <Route path="/perfil" element={<Perfil token={token} />} />
+        <Route path="/perfil" element={<Perfil />} /> 
         <Route path='/populares' element={<Populares/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path="/movie/:title" element={<MovieDetail/>} />

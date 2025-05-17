@@ -74,7 +74,8 @@ public class UsuarioController {
         Optional<Usuario> usuarioOptional = usuarioService.findById(user.getId());
         if (usuarioOptional.isPresent()) {
             usuarioService.updateNickname(user.getId(), user.getNickname());
-            return ResponseEntity.ok("Nickname actualizado");
+            String newToken= JwtUtil.generateToken((user.getNickname()));
+            return ResponseEntity.ok(newToken);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
