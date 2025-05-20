@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { use, useEffect, useState } from 'react';
 import "../styles/components/Movie-detail-layout.css";
 import { getMovieByTitle } from '../services/movie.service';
+import { getUser } from '../services/usuario.service';
+import { addFavorito } from '../services/favorito.service';
 
 function MovieDetailLayout({ title }) {
     const camera = <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 256 256"><path fill="#a9cc30" d="M216 106H86.68l122.85-32.43a6 6 0 0 0 4.26-7.38l-8.16-30a13.94 13.94 0 0 0-17-9.72L36.32 66.67a13.77 13.77 0 0 0-8.48 6.47a13.57 13.57 0 0 0-1.36 10.42L34 111.34V200a14 14 0 0 0 14 14h160a14 14 0 0 0 14-14v-88a6 6 0 0 0-6-6m-90.25-50.52l33 19.07l-42.43 11.2l-33-19.07Zm66-17.41a1.92 1.92 0 0 1 2.34 1.26l6.57 24.18l-25.4 6.69l-33-19.07ZM38.23 79.14a1.85 1.85 0 0 1 1.15-.87L66.86 71l33 19.08l-55.2 14.6l-6.6-24.27a1.63 1.63 0 0 1 .17-1.27M210 200a2 2 0 0 1-2 2H48a2 2 0 0 1-2-2v-82h164Z"></path></svg>
@@ -9,16 +11,29 @@ function MovieDetailLayout({ title }) {
     const genre = <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="#a9cc30" d="M2.616 20.5v-17h18.769v17zm1-1h3v-3h-3zm13.769 0h3v-3h-3zM11.5 15.923h1v-5.115h-1zM3.616 15.5h3v-3h-3zm13.769 0h3v-3h-3zm-13.77-4h3v-3h-3zm13.77 0h3v-3h-3zM12 9q.262 0 .439-.177q.176-.177.176-.438q0-.262-.177-.439T12 7.77t-.438.177t-.177.439t.177.438T12 9M3.615 7.5h3v-3h-3zm13.77 0h3v-3h-3zm-9.77 12h8.77v-15h-8.77zm0-15h8.77z"/></svg>
     const actors = <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 16 16"><g fill="none" stroke="#a9cc30" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.8"><circle cx="5" cy="9" r="2.25"/><circle cx="11" cy="4" r="2.25"/><path d="M7.75 9.25c0-1 .75-3 3.25-3s3.25 2 3.25 3m-12.5 5c0-1 .75-3 3.25-3s3.25 2 3.25 3"/></g></svg>
     const available = <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 20 20"><path fill="#a9cc30" d="M9.995 0C4.475 0 0 4.475 0 9.995s4.475 9.996 9.995 9.996s9.996-4.475 9.996-9.996C19.99 4.475 15.516 0 9.995 0M2 9.995a7.995 7.995 0 1 1 15.99 0a7.995 7.995 0 0 1-15.99 0m12.207-3.202a1 1 0 0 1 0 1.414l-4.5 4.5a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.793-3.793a1 1 0 0 1 1.414 0"/></svg>
+    const star= <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="#f1fe00" d="m8.85 16.825l3.15-1.9l3.15 1.925l-.825-3.6l2.775-2.4l-3.65-.325l-1.45-3.4l-1.45 3.375l-3.65.325l2.775 2.425zm3.15-.723l-3.63 2.192q-.16.079-.297.064q-.136-.016-.265-.094q-.13-.08-.196-.226t-.012-.319l.966-4.11l-3.195-2.77q-.135-.11-.178-.263t.019-.293t.165-.23q.104-.087.28-.118l4.216-.368l1.644-3.892q.068-.165.196-.238T12 5.364t.288.073t.195.238l1.644 3.892l4.215.368q.177.03.281.119q.104.088.166.229q.061.14.018.293t-.178.263l-3.195 2.77l.966 4.11q.056.171-.011.318t-.197.226q-.128.08-.265.095q-.136.015-.296-.064zm0-3.852"></path></svg>
+    const favorite= <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="#f1fe00" d="m12 16.102l-3.63 2.192q-.16.079-.297.064q-.136-.016-.265-.094q-.13-.08-.196-.226t-.012-.319l.966-4.11l-3.195-2.77q-.135-.11-.178-.263t.019-.293t.165-.23q.104-.087.28-.118l4.216-.368l1.644-3.892q.068-.165.196-.238T12 5.364t.288.073t.195.238l1.644 3.892l4.215.368q.177.03.281.119q.104.088.166.229q.061.14.018.293t-.178.263l-3.195 2.77l.966 4.11q.056.171-.011.318t-.197.226q-.128.08-.265.095q-.136.015-.296-.064z"></path></svg>
 
-    const [movie, setMovie] = React.useState([]);
-    const [loading, setLoading] = React.useState(true); // Estado de carga
 
-    React.useEffect(() => {
+    const [movie, setMovie] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [selected, setSelected] = useState(false);
+    const[user, setUser]= useState(null);
+
+    const handleClick = async() => {
+    setSelected(prev => !prev);
+        if(selected){
+            await addFavorito(movie.id, user);
+        }
+  };
+
+    useEffect(() => {
         if (title) {
             const fetchMovie = async () => {
                 try {
                     const response = await getMovieByTitle(title);
                     console.log("Respuesta de la API:", response);
+                    console.log("ID:", response[0].imdbId);
 
                     const foundMovie = response.find(
                         (item) =>
@@ -42,6 +57,15 @@ function MovieDetailLayout({ title }) {
         }
     }, [title]);
 
+   useEffect(() => {
+    const fetchUser = async () => {
+        const usuario = await getUser();
+        setUser(usuario);
+    };
+
+    fetchUser();
+    }, []);
+
     if (loading) {
         return (
             <div className="loading-container">
@@ -52,6 +76,9 @@ function MovieDetailLayout({ title }) {
 
     return (
         <div className="pelicula">
+            <div onClick={handleClick}>
+                {selected ? favorite : star}
+            </div>
             <div className='tituloPeli'>
                 <h2>{movie ? movie.title : "Cargando..."}</h2>
                 <img className="imagenPoster" src={movie.imageSet?.verticalPoster?.w720} alt={movie.title} />

@@ -17,6 +17,7 @@ public class FavoritoService {
     public Optional<Favorito> findById(Integer id){
         return favoritosRepository.findById(id);
     }
+
     public Favorito save(Favorito favorito){
         return favoritosRepository.save(favorito);
     }
