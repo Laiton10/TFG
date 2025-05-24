@@ -2,7 +2,7 @@ import React, { use, useEffect, useState } from 'react';
 import "../styles/components/Movie-detail-layout.css";
 import { getMovieByTitle } from '../services/movie.service';
 import { getUser } from '../services/usuario.service';
-import { addFavorito } from '../services/favorito.service';
+import { addFavorito, deleteFavorito, getFavorito } from '../services/favorito.service';
 
 function MovieDetailLayout({ title }) {
     const camera = <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 256 256"><path fill="#a9cc30" d="M216 106H86.68l122.85-32.43a6 6 0 0 0 4.26-7.38l-8.16-30a13.94 13.94 0 0 0-17-9.72L36.32 66.67a13.77 13.77 0 0 0-8.48 6.47a13.57 13.57 0 0 0-1.36 10.42L34 111.34V200a14 14 0 0 0 14 14h160a14 14 0 0 0 14-14v-88a6 6 0 0 0-6-6m-90.25-50.52l33 19.07l-42.43 11.2l-33-19.07Zm66-17.41a1.92 1.92 0 0 1 2.34 1.26l6.57 24.18l-25.4 6.69l-33-19.07ZM38.23 79.14a1.85 1.85 0 0 1 1.15-.87L66.86 71l33 19.08l-55.2 14.6l-6.6-24.27a1.63 1.63 0 0 1 .17-1.27M210 200a2 2 0 0 1-2 2H48a2 2 0 0 1-2-2v-82h164Z"></path></svg>
@@ -20,12 +20,21 @@ function MovieDetailLayout({ title }) {
     const [selected, setSelected] = useState(false);
     const[user, setUser]= useState(null);
 
-    const handleClick = async() => {
-    setSelected(prev => !prev);
-        if(selected){
-            await addFavorito(movie.id, user);
-        }
-  };
+const handleClick = async () => {
+  if (!user || !movie.imdbId) return;
+
+  if (!selected) {
+    // Si no está seleccionado (estrella vacía), lo añadimos
+    await addFavorito(movie.imdbId, user);
+    setSelected(true);
+  } else {
+    // Si está seleccionado (estrella rellena), lo eliminamos
+    await deleteFavorito(movie.imdbId, user);
+    setSelected(false);
+  }
+};
+
+
 
     useEffect(() => {
         if (title) {
@@ -65,6 +74,24 @@ function MovieDetailLayout({ title }) {
 
     fetchUser();
     }, []);
+
+  useEffect(() => {
+  const checkIfFavorite = async () => {
+    if (user?.id && movie?.imdbId) {
+      try {
+        const fav = await getFavorito(user.id, movie.imdbId); // orden correcto
+        setSelected(!!fav); // true si existe favorito
+      } catch (e) {
+        console.warn("No es favorito o error inesperado:", e.message);
+        setSelected(false); // si no está o falla, se muestra como no favorito
+      }
+    }
+  };
+
+  checkIfFavorite();
+}, [user, movie]);
+
+
 
     if (loading) {
         return (

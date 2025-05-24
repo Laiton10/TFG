@@ -40,4 +40,18 @@ public class FavoritoService {
             return false;
         }
     }
+
+    public Optional<Favorito> findByUsuarioAndPelicula(Integer usuarioId, String peliculaId) {
+        return favoritosRepository.findByUsuarioIdAndPeliculaId(usuarioId, peliculaId);
+    }
+
+
+    public boolean existsByUsuarioAndPelicula(Integer usuarioId, String peliculaId) {
+        return favoritosRepository.existsByUsuario_IdAndPelicula_Id(usuarioId, peliculaId);
+    }
+
+    public void deleteByUsuarioAndPelicula(Integer usuarioId, String peliculaId) {
+        favoritosRepository.deleteByUsuarioIdAndPeliculaId(usuarioId, peliculaId);
+    }
+
 }
