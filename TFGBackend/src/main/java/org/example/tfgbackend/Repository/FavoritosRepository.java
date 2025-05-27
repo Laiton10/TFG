@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface FavoritosRepository extends JpaRepository<Favorito, Integer> {
     Optional<Favorito> findByUsuarioIdAndPeliculaId(Integer usuarioId, String peliculaId);
-    void deleteByUsuarioIdAndPeliculaId(Integer usuarioId, String peliculaId);
+    void deleteByUsuarioIdAndPeliculaId(Integer usuario_id, String pelicula_id);
     boolean existsByUsuario_IdAndPelicula_Id(Integer usuarioId, String peliculaId);
 }

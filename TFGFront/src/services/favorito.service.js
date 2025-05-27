@@ -27,15 +27,17 @@ export const addFavorito = async (idPeli, user) => {
 };
 
 export const deleteFavorito = async (idPeli, user) => {
+  console.log("eliminando")
   try {
-    const response = await fetch(`${baseUrl}?peliculaId=${idPeli}&usuarioId=${user.id}`, { //el controller espera un requestParam
+    const response = await fetch(`${baseUrl}?usuario_id=${user.id}&pelicula_id=${idPeli}`, { //el controller espera un requestParam
       method: 'DELETE'
     });
 
     if (!response.ok) {
+      console.log("error")
       throw new Error('Error al eliminar favorito');
     }
-
+    console.log("funciona");
     const data = await response.text();
     return data;
   } catch (error) {
@@ -50,20 +52,21 @@ export const getFavorito = async (usuarioId, peliculaId) => {
       method: 'GET'
     });
 
-    if (response.status === 404) {
-      return null; // No es favorito, y está bien
+    const data = await response.json();
+
+    // Si devuelve el objeto de error personalizado con "msg", entonces no es favorito
+    //No queremos que salte el error porque solo es para obtener la información
+    if (data.msg === "Favorito no encontrado") {
+      return null;
     }
 
-    if (!response.ok) {
-      throw new Error("Error al obtener favorito");
-    }
-
-    return await response.json(); // Devuelve objeto Favorito si lo hay
+    return data; // objeto Favorito válido
   } catch (error) {
     console.error("Error al obtener favorito:", error);
     return null;
   }
 };
+
 
 
 

@@ -29,6 +29,7 @@ const handleClick = async () => {
     setSelected(true);
   } else {
     // Si está seleccionado (estrella rellena), lo eliminamos
+    console.log("vamos a deseleccionar y eliminar")
     await deleteFavorito(movie.imdbId, user);
     setSelected(false);
   }
@@ -75,23 +76,23 @@ const handleClick = async () => {
     fetchUser();
     }, []);
 
-  useEffect(() => {
+useEffect(() => {
   const checkIfFavorite = async () => {
-    if (user?.id && movie?.imdbId) {
+    if (user && movie?.imdbId) {
       try {
-        const fav = await getFavorito(user.id, movie.imdbId); // orden correcto
-        setSelected(!!fav); // true si existe favorito
+        const fav = await getFavorito(user.id, movie.imdbId);
+        setSelected(!!fav);
       } catch (e) {
         console.warn("No es favorito o error inesperado:", e.message);
-        setSelected(false); // si no está o falla, se muestra como no favorito
+        setSelected(false);
       }
     }
   };
 
-  checkIfFavorite();
-}, [user, movie]);
-
-
+  if (user && movie?.imdbId) {
+    checkIfFavorite();
+  }
+}, [user, movie?.imdbId]);
 
     if (loading) {
         return (

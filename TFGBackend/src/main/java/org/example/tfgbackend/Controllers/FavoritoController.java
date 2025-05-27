@@ -60,21 +60,28 @@ public class FavoritoController {
 
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody FavoritoDTO favoritoDTO ) {
-        if (favoritoService.existsByUsuarioAndPelicula(favoritoDTO.getUsuario_id(), favoritoDTO.getPelicula_id())) {
-            return ResponseEntity.ok("Ya existe este favorito.");
+        try{
+            if (favoritoService.existsByUsuarioAndPelicula(favoritoDTO.getUsuario_id(), favoritoDTO.getPelicula_id())) {
+                return ResponseEntity.ok("Ya existe este favorito.");
+            }
+            Favorito favorito = new Favorito();
+
+            Usuario usuario = new Usuario();
+            usuario.setId(favoritoDTO.getUsuario_id());
+
+            Pelicula pelicula = new Pelicula();
+            pelicula.setId(favoritoDTO.getPelicula_id());
+
+            favorito.setUsuario(usuario);
+            favorito.setPelicula(pelicula);
+
+            favoritoService.save(favorito);
+
+            return ResponseEntity.ok("Favorito insertado correctamente");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al insertar el favorito: " + e.getMessage());
         }
-        Favorito favorito = new Favorito();
 
-        Usuario usuario = new Usuario();
-        usuario.setId(favoritoDTO.getUsuario_id());
-
-        Pelicula pelicula = new Pelicula();
-        pelicula.setId(favoritoDTO.getPelicula_id());
-
-        favorito.setUsuario(usuario);
-        favorito.setPelicula(pelicula);
-
-        return ResponseEntity.ok("Favorito insertado correctamente");
     }
 
     @DeleteMapping("/{id}")
@@ -89,8 +96,8 @@ public class FavoritoController {
     }
 
     @DeleteMapping
-    public ResponseEntity<String> delete(@RequestParam String peliculaId, @RequestParam Integer usuarioId) {
-        favoritoService.deleteByUsuarioAndPelicula(usuarioId, peliculaId);
+    public ResponseEntity<String> delete(@RequestParam Integer usuario_id, @RequestParam String pelicula_id) {
+        favoritoService.deleteByUsuarioAndPelicula(usuario_id, pelicula_id);
         return ResponseEntity.ok("Favorito eliminado");
     }
 

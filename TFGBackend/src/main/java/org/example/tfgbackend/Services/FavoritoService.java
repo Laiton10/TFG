@@ -4,6 +4,8 @@ import org.example.tfgbackend.Model.Favorito;
 import org.example.tfgbackend.Repository.FavoritosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -50,8 +52,9 @@ public class FavoritoService {
         return favoritosRepository.existsByUsuario_IdAndPelicula_Id(usuarioId, peliculaId);
     }
 
-    public void deleteByUsuarioAndPelicula(Integer usuarioId, String peliculaId) {
-        favoritosRepository.deleteByUsuarioIdAndPeliculaId(usuarioId, peliculaId);
+    @Transactional
+    public void deleteByUsuarioAndPelicula(Integer usuario_id, String pelicula_id) {
+        favoritosRepository.deleteByUsuarioIdAndPeliculaId(usuario_id, pelicula_id);
     }
 
 }
