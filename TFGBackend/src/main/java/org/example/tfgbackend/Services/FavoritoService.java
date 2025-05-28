@@ -47,6 +47,9 @@ public class FavoritoService {
         return favoritosRepository.findByUsuarioIdAndPeliculaId(usuarioId, peliculaId);
     }
 
+    public List<Favorito> getFavoritosByUsuarioId(Integer usuario_id) {
+        return favoritosRepository.findByUsuarioId(usuario_id);
+    }
 
     public boolean existsByUsuarioAndPelicula(Integer usuarioId, String peliculaId) {
         return favoritosRepository.existsByUsuario_IdAndPelicula_Id(usuarioId, peliculaId);

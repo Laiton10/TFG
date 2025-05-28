@@ -16,6 +16,8 @@
   flex-direction: column;
   align-items: center;
   flex: 1;
+  margin-top: -20px;  /* Subir el bloque */
+  margin-left: -20px; /* Mover a la izquierda */
 }
 
 .tituloPeli h2 {

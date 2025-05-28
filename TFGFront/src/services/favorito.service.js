@@ -67,7 +67,25 @@ export const getFavorito = async (usuarioId, peliculaId) => {
   }
 };
 
+export const getFavoritosUsuario = async (usuario_id) => {
+  try {
+    const response = await fetch(`${baseUrl}/getFavoritos/${usuario_id}`, {
+      method: 'GET',
+    });
 
+    if (!response.ok) {
+      const msg = "Este usuario no tiene favoritos añadidos a su lista";
+      return msg;
+    }
+
+    const data = await response.json();
+    return data;
+
+  } catch (error) {
+    console.error("Error al obtener los favoritos del usuario:", error);
+    return null;
+  }
+};
 
 
    

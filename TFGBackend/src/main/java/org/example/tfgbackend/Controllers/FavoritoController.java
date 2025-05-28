@@ -57,6 +57,13 @@ public class FavoritoController {
         }
     }
 
+    @GetMapping("getFavoritos/{id}")
+    public ResponseEntity<?> getFavoritosByUsuario(@PathVariable("id") Integer usuario_id) {
+        List<Favorito> favoritos = favoritoService.getFavoritosByUsuarioId(usuario_id);
+        return ResponseEntity.ok(favoritos);
+    }
+
+
 
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody FavoritoDTO favoritoDTO ) {

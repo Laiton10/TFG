@@ -1,12 +1,14 @@
 import axios from "axios"; //libreria de JS que nos facilita las request a
 
 const TOP250_API = "https://imdb236.p.rapidapi.com/api/imdb/top250-movies";
+const GET_BY_ID= "https://imdb236.p.rapidapi.com/api/imdb"
 const API_HOST= "imdb236.p.rapidapi.com";
 const API_KEY = "f60e937c39msh852eeaf7064f519p10708ajsnc9589acdf850";
 
 const MOVIE_BY_TITLE = 'https://streaming-availability.p.rapidapi.com/shows/search/title?'
 const API_HOST2 = 'streaming-availability.p.rapidapi.com';
 const baseUrl = 'http://localhost:8080/peliculas';
+
 
 export const getTopMovies = async () => {
     const options = {
@@ -20,6 +22,22 @@ export const getTopMovies = async () => {
 
     const response = await axios.request(options);
     return response;
+};
+
+export const getMovieById = async (id) => {
+  try {
+    const response = await axios.get(`${GET_BY_ID}/${id}`, {
+      headers: {
+        'x-rapidapi-host': API_HOST,
+        'x-rapidapi-key': API_KEY
+      }
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(`Error al obtener la película con id ${id}:`, error);
+    return null;
+  }
 };
 
 export const getMovieByTitle = async (title) => {
