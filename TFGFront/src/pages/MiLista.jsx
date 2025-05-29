@@ -61,7 +61,7 @@ const MiLista = () => {
             <MovieCard key={movie.id} movie={movie} />
           ))
         ) : (
-          <p style={{ textAlign: 'center' }}>No tienes películas favoritas aún.</p>
+          <p>No tienes películas favoritas aún.</p>
         )}
       </div>
         </div>

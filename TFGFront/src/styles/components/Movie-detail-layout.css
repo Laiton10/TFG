@@ -15,9 +15,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   flex: 1;
-  margin-top: -20px;  /* Subir el bloque */
-  margin-left: -20px; /* Mover a la izquierda */
+  margin-top: -20px;  
+  margin-left: -20px;
 }
 
 .tituloPeli h2 {
@@ -92,7 +93,7 @@
 }
 
 .infoPeli strong {
-  color: var(--color-text)
+  color: var(--color-text);
   font-weight: 600;
 }
 
@@ -117,6 +118,25 @@
   height: 60px;
   animation: spin 1s linear infinite;
 }
+
+.link-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  top: 65px;
+  right: 555px;
+}
+
+.link-icono{
+  position: relative;
+  cursor: pointer;
+}
+
+.link-icono:hover::after{
+  opacity: 1;
+}
+
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
