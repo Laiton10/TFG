@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.example.tfgbackend.DTO.LoginRequest;
 import org.example.tfgbackend.JWT.JwtUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -134,7 +135,16 @@ public class UsuarioController {
         }
     }
 
-
+    //Guardar la imagen de perfil del usuario
+    @PostMapping("/{id}/upload")
+    public ResponseEntity<?> upload(@PathVariable Integer id, @RequestParam("image") MultipartFile image) {
+        try{
+            usuarioService.guardarImagenPerfil(id, image);
+            return ResponseEntity.ok("Imagen guardada");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
 
 

@@ -6,10 +6,17 @@ import org.example.tfgbackend.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UsuarioService {
@@ -89,6 +96,35 @@ public class UsuarioService {
         }
         return Optional.empty();
     }
+
+    public void guardarImagenPerfil(Integer id, MultipartFile imagen) throws IOException {
+        String originalExtension = imagen.getOriginalFilename()
+                .substring(imagen.getOriginalFilename().lastIndexOf('.'));
+
+
+        String filename = "perfil_usuario_" + id + "_" + UUID.randomUUID() + originalExtension;
+        Path filepath = Paths.get("uploads", filename);
+        Files.createDirectories(filepath.getParent());
+        Files.write(filepath, imagen.getBytes());
+
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
+
+
+            String previousImagePath = usuario.getImagenPerfil();
+            if (previousImagePath != null && !previousImagePath.equals("uploads/" + filename)) {
+                Path previousPath = Paths.get(previousImagePath);
+                Files.deleteIfExists(previousPath);
+            }
+
+            usuario.setImagenPerfil("uploads/" + filename);
+            usuarioRepository.save(usuario);
+        } else {
+            throw new FileNotFoundException("usuario no encontrado");
+        }
+    }
+
 
 
 }

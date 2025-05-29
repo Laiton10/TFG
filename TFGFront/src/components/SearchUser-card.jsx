@@ -8,7 +8,15 @@ const SearchUserCard = ({ usuario }) => {
     <Link to={`/usuario/${usuario.nickname}`} className="user-card-link">
       <div className="user-card">
         <div className="user-info">
-          <img src={Image} alt="profile" className="profile-img" />
+          <img 
+          src={
+            usuario.imagenPerfil
+            ? `http://localhost:8080/${usuario.imagenPerfil}`
+            : Image
+          } 
+          alt="profile" 
+          className="profile-img" 
+          />
           <div className="text">
             <h3>{usuario.nickname}</h3>
             <p>{usuario.descripcion || 'Sin descripción'}</p>

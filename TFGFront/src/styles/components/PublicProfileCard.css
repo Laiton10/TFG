@@ -1,0 +1,53 @@
+.public-profile-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: var(--color-background);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 2rem;
+}
+
+.public-profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+}
+
+.public-profile-img {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nickname{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+    color: #bbbbbb66;;
+}
+
+.nombre{
+    font-size: 2rem;
+    color: var(--color-hover);
+    margin: 0;
+    
+}
+
+.upload-button{
+  background-color: #1E1F26;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+
+}
