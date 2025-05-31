@@ -10,11 +10,33 @@
         const [puntuacion, setPuntuacion] = useState(5);
         const {id}= useParams();
 
-        useEffect(() =>{
-            const getPelicula= async() =>{
-                const peli= await getMovieById(id);
-                setMovie(peli);
-            }
+        useEffect(() => {
+         const getPelicula = async () => {
+            const storedMovies = localStorage.getItem('topMovies');
+
+                if (storedMovies) {
+                    console.log("Cargando desde localStorage...");
+                    const movies = JSON.parse(storedMovies);
+                    const foundMovie = movies.find((m) => m.id === id);
+
+                    if (foundMovie) {
+                        setMovie(foundMovie);
+                        return;
+                    }
+                }
+
+            console.log("Cargando desde la API...");
+            const peli = await getMovieById(id);
+
+            // Guardar en localStorage si no estaba
+            const updatedMovies = storedMovies
+            ? [...JSON.parse(storedMovies), peli]
+            : [peli];
+
+            localStorage.setItem('topMovies', JSON.stringify(updatedMovies));
+            setMovie(peli);
+         };
+
             getPelicula();
         }, [id]);
 

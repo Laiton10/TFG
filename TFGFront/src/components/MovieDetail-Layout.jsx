@@ -56,34 +56,54 @@ const handleCritica = async () => {
     navigate(`/critica/${movie.imdbId}`)
 }
     useEffect(() => {
-        if (title) {
-            const fetchMovie = async () => {
-                try {
-                    const response = await getMovieByTitle(title);
-                    console.log("Respuesta de la API:", response);
-                    console.log("ID:", response[0].imdbId);
+  if (!title) return;
 
-                    const foundMovie = response.find(
-                        (item) =>
-                            item.showType === 'movie' &&
-                            item.title?.toLowerCase() === title.toLowerCase()
-                    );
+  const fetchMovie = async () => {
+    try {
+      const storedMovies = localStorage.getItem('searchedMovies');
+      let cached = storedMovies ? JSON.parse(storedMovies) : [];
 
-                    if (foundMovie) {
-                        setMovie(foundMovie);
-                    } else {
-                        console.warn("Película no encontrada en los resultados.");
-                    }
-                } catch (error) {
-                    console.error('Error fetching movie:', error);
-                } finally {
-                    setLoading(false); // Finaliza carga
-                }
-            };
+      // Buscar por título (ignorando mayúsculas)
+      const cachedMovie = cached.find(
+        (item) =>
+          item.title?.toLowerCase() === title.toLowerCase() &&
+          item.showType === 'movie'
+      );
 
-            fetchMovie();
+      if (cachedMovie) {
+        console.log('Cargando desde localStorage...');
+        setMovie(cachedMovie);
+      } else {
+        console.log('Cargando desde la API...');
+        const response = await getMovieByTitle(title);
+        console.log('Respuesta de la API:', response);
+
+        const foundMovie = response.find(
+          (item) =>
+            item.showType === 'movie' &&
+            item.title?.toLowerCase() === title.toLowerCase()
+        );
+
+        if (foundMovie) {
+          setMovie(foundMovie);
+
+          // Guardar en localStorage
+          const updated = [...cached, foundMovie];
+          localStorage.setItem('searchedMovies', JSON.stringify(updated));
+        } else {
+          console.warn('Película no encontrada en los resultados.');
         }
-    }, [title]);
+      }
+    } catch (error) {
+      console.error('Error fetching movie:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchMovie();
+}, [title]);
+
 
    useEffect(() => {
     const fetchUser = async () => {

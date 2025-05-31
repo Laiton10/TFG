@@ -18,31 +18,44 @@ const MiLista = () => {
     getUsuario();
   }, []); 
         
-      useEffect(() => {
-  const getFavoritos = async () => {
-    if (user?.id) {
-      try {
-        const favoritos = await getFavoritosUsuario(user.id);
-
-        // Creamos un array de promesas para obtener todas las películas
-        const promesasPeliculas = favoritos.map((favorito) =>
-          getMovieById(favorito.pelicula.id)
-        );
-
-        // Esperamos a que todas las promesas se resuelvan
-        const pelis = await Promise.all(promesasPeliculas);
-
-        setMovies(pelis); // Guardamos las películas ya resueltas
-        setLoading(false);
-      } catch (error) {
-        console.error("Error al obtener favoritos:", error);
-        setLoading(false);
-      }
-    }
-  };
-
-  getFavoritos();
-}, [user]);
+  useEffect(() => {
+        const getFavoritos = async () => {
+          if (!user?.id) return;
+  
+            const storedMovies = localStorage.getItem('topMovies');
+            let topMovies = storedMovies ? JSON.parse(storedMovies) : [];
+  
+            try {
+              const favoritos = await getFavoritosUsuario(user.id);
+  
+              // Verificar si ya están todas en cache
+              const pelis = await Promise.all(
+              favoritos.map(async (favorito) => {
+                const cached = topMovies.find((m) => m.id === favorito.pelicula.id);
+  
+                if (cached) {
+                  return cached;
+                } else {
+                  const peli = await getMovieById(favorito.pelicula.id);
+                  topMovies.push(peli); // guardar en memoria
+                  return peli;
+                }
+              })
+              );
+  
+              // Guardamos el cache actualizado en localStorage
+              localStorage.setItem('topMovies', JSON.stringify(topMovies));
+              setMovies(pelis);
+            } catch (error) {
+              console.error("Error al obtener favoritos:", error);
+            } finally{
+              setLoading(false);
+            }
+        };
+  
+        getFavoritos();
+      }, [user]);
+  
 
 
   if (loading) {
