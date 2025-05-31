@@ -48,8 +48,6 @@
                 <span className="puntuacion-num">{puntuacion}</span>
                 </div>
             </div>
-
-            <label htmlFor="texto" className="critica-label">Tu crítica:</label>
             <textarea
                 id="texto"
                 value={texto}

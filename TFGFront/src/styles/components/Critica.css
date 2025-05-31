@@ -1,148 +1,119 @@
-.peliculaCritica {
+.peliculaCritca {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 70px;
-  margin-bottom: 100px;    
-  padding: 40px 130px;
+  padding: 50px 80px;
+  gap: 60px;
   background-color: #0b0f1a;
-  border-radius: 20px;
+  border-radius: 16px;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
-  max-width: 100vw;
-  min-height: 550px;
+  margin: 60px auto;
+  max-width: 1200px;
+  font-family: 'Playfair Display', serif;
+  color: white;
 }
 
 .tituloPeliCritica {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  flex: 1;
-  top: 25px;
-  right: 40px;
 }
 
 .tituloPeliCritica h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 35px;
-  letter-spacing: 1px;
-  margin-bottom: 25px;
-  text-align: center;
+  font-size: 36px;
   font-weight: bold;
-  background: linear-gradient(
-    90deg,
-    #fff8dc,
-    #ffcc00,
-    #d4af37,
-    #ffcc00,
-    #fff8dc
-  );
+  text-align: center;
+  margin-bottom: 25px;
+  background: linear-gradient(90deg, #fff8dc, #ffcc00, #d4af37);
   background-size: 200% auto;
   color: transparent;
   background-clip: text;
-  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.2);
-}
-
-@keyframes shine {
-  to {
-    background-position: -200% center;
-  }
+  -webkit-background-clip: text;
+  text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.2);
 }
 
 .imagenPosterCritica {
-  max-height: 550px;
   width: 100%;
-  max-width: 360px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  max-width: 340px;
+  border-radius: 12px;
   object-fit: cover;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
 
 .formCritica {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  max-width: 700px;
-  gap: 22px;
-  color: #fff;
-  position: relative;
-  top: 40px;
-  left: 20px;
-  font-family: 'Playfair Display', serif;
+  gap: 20px;
 }
 
 .rating-range {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  gap: 15px;
   font-size: 18px;
-  font-weight: 600;
-  color: var(--color-hover);
+  font-weight: bold;
+  color: #f1fe00;
 }
 
 .range-wrapper {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
 .rating-range input[type="range"] {
   flex: 1;
   height: 6px;
-  background: #ccc;
   border-radius: 3px;
+  background-color: #ccc;
   accent-color: #f1fe00;
   cursor: pointer;
 }
 
+/* Control del aspecto del 'thumb' del range */
 .rating-range input[type="range"]::-webkit-slider-thumb {
-  height: 20px;
-  width: 20px;
-  background-color: var(--color-hover);
-  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  background-color: #f1fe00;
   border: none;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .puntuacion-num {
-  display: inline-block;
-  min-width: 28px;
-  text-align: center;
-  font-weight: bold;
   font-size: 20px;
-  color: #fff;
-  padding: 3px 8px;
+  font-weight: bold;
+  color: white;
   background-color: #2c3143;
+  padding: 6px 12px;
   border-radius: 6px;
-}
-
-.critica-label {
-  margin-top: 10px;
-  font-weight: 600;
-  font-size: 17px;
-  color: var(--color-hover);
+  min-width: 30px;
+  text-align: center;
 }
 
 .formCritica textarea {
-  padding: 18px;
-  border-radius: 8px;
-  font-size: 16px;
-  border: none;
   background-color: #1e2538;
   color: white;
-  resize: vertical;
-  width: 100%;
+  font-size: 16px;
+  padding: 16px;
+  border: none;
+  border-radius: 8px;
   min-height: 200px;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+  resize: vertical;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
 }
 
 .formCritica button {
   align-self: flex-start;
-  padding: 14px 28px;
-  font-size: 16px;
-  border-radius: 8px;
-  background-color: var(--color-hover);
+  padding: 12px 24px;
+  background-color: #f1fe00;
   color: black;
+  font-size: 16px;
   font-weight: bold;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
