@@ -13,6 +13,7 @@ import MiLista from './pages/MiLista';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { getTopMovies } from './services/movie.service';
+import Critica from './components/Critica';
 
 
 
@@ -49,6 +50,7 @@ function App() {
         <Route path='/buscar' element={<Buscar/>}/>
         <Route path='/usuario/:nickname' element={<PublicProfile/>}/>
         <Route path='/miLista' element={<MiLista/>}/>
+        <Route path='/critica/:id' element={<Critica/>}/>
       </Routes>
       <Footer/>
     </>
