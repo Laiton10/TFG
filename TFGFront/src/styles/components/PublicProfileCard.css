@@ -1,3 +1,12 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+
 .public-profile-card {
   display: flex;
   align-items: center;
@@ -49,5 +58,39 @@
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
+}
 
+.last-favorites{
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-left: 5rem;
+  font-size: 20px;
+  color: var(--color-text);
+}
+
+.favorites-flex {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.favorite-movie{
+  display: flex;
+  flex-direction: column;
+  max-width: 220px;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.favorite-movie img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }

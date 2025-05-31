@@ -1,12 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { searchUserByNickname } from '../services/usuario.service';
 import { useUploadImage } from '../services/imageUpload.service';
+import { getFavoritosUsuario } from '../services/favorito.service';
+import { getMovieById } from '../services/movie.service';
 import Image from '../assets/images/profile.png';
 import '../styles/components/PublicProfileCard.css';
 
 const PublicProfileCard = ({ nickname }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(false);
+  const[movies, setMovies]= useState([]);
   const { upload } = useUploadImage(); 
 
   const refreshUser = useCallback(async () => {
@@ -23,6 +26,30 @@ const PublicProfileCard = ({ nickname }) => {
   useEffect(() => {
     refreshUser();
   }, [refreshUser]);
+
+   useEffect(() => {
+    const getFavoritos = async () => {
+      if (user?.id) {
+        try {
+          const favoritos = await getFavoritosUsuario(user.id);
+  
+          // Creamos un array de promesas para obtener todas las películas
+          const promesasPeliculas = favoritos.map((favorito) =>
+            getMovieById(favorito.pelicula.id)
+          );
+  
+          // Esperamos a que todas las promesas se resuelvan
+          const pelis = await Promise.all(promesasPeliculas);
+          setMovies(pelis); // Guardamos las películas ya resueltas
+        } catch (error) {
+          console.error("Error al obtener favoritos:", error);
+        }
+      }
+    };
+  
+    getFavoritos();
+  }, [user]);
+
 
   if (error) return <p>Usuario no encontrado</p>;
   if (!user) return <p>Cargando perfil...</p>;
@@ -46,7 +73,11 @@ const PublicProfileCard = ({ nickname }) => {
     }
   }
 
+ 
   return (
+    <div className="container">
+
+    
     <div className="public-profile-card">
       <img
         src={
@@ -72,10 +103,23 @@ const PublicProfileCard = ({ nickname }) => {
 
         <button onClick={handleButtonClick} className="upload-button">
           Cambiar imagen
-        </button>
-     
-      </div>
+        </button> 
+     </div>
+     </div>
 
+     <div className='last-favorites'>
+       <h2>Últimos favoritos</h2>
+       <div className="favorites-flex">
+          {movies.slice(-6).reverse().map((movie) => (
+            <div key={movie.id} className="favorite-movie">
+              <img src={movie.primaryImage}></img>
+              <h3>{movie.primaryTitle}</h3>
+            </div>
+          ))}
+       </div>
+     </div>
+
+    
     </div>
   );
 };
