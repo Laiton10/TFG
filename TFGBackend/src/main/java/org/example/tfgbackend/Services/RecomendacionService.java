@@ -4,6 +4,8 @@ import org.example.tfgbackend.Model.Recomendacion;
 import org.example.tfgbackend.Repository.RecomendacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +21,10 @@ public class RecomendacionService {
     }
     public Recomendacion save(Recomendacion recomendacion){
         return recomendacionRepository.save(recomendacion);
+    }
+
+    public boolean existsByUsuarioAndPelicula(Integer usuarioId, String peliculaId) {
+        return recomendacionRepository.existsByUsuario_IdAndPelicula_Id(usuarioId, peliculaId);
     }
 
     public boolean update(Recomendacion recomendacion){
@@ -38,5 +44,10 @@ public class RecomendacionService {
         }else{
             return false;
         }
+    }
+
+    @Transactional
+    public void deleteByUsuarioAndPelicula(Integer usuario_id, String pelicula_id) {
+        recomendacionRepository.deleteByUsuarioIdAndPeliculaId(usuario_id, pelicula_id);
     }
 }

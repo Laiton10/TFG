@@ -128,14 +128,44 @@
   right: 555px;
 }
 
-.link-icono{
+.link-icono {
   position: relative;
   cursor: pointer;
 }
 
-.link-icono:hover::after{
+.link-icono::after {
+  content: attr(data);
+  position: absolute;
+  bottom: 120%; /* encima del icono */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.link-icono:hover::after {
   opacity: 1;
 }
+
+.mensaje-flotante {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-bg-register);
+    color: white;   
+    padding: 12px 20px;
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    box-shadow: 0 0 12px var(--color-hover);
+  }
+
 
 
 @keyframes spin {

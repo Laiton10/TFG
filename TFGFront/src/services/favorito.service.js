@@ -27,17 +27,14 @@ export const addFavorito = async (idPeli, user) => {
 };
 
 export const deleteFavorito = async (idPeli, user) => {
-  console.log("eliminando")
   try {
     const response = await fetch(`${baseUrl}?usuario_id=${user.id}&pelicula_id=${idPeli}`, { //el controller espera un requestParam
       method: 'DELETE'
     });
 
     if (!response.ok) {
-      console.log("error")
       throw new Error('Error al eliminar favorito');
     }
-    console.log("funciona");
     const data = await response.text();
     return data;
   } catch (error) {

@@ -2,7 +2,12 @@ package org.example.tfgbackend.Controllers;
 
 import jakarta.servlet.ServletRequest;
 import jakarta.validation.Valid;
+import org.example.tfgbackend.DTO.FavoritoDTO;
+import org.example.tfgbackend.DTO.RecomendacionDTO;
+import org.example.tfgbackend.Model.Favorito;
+import org.example.tfgbackend.Model.Pelicula;
 import org.example.tfgbackend.Model.Recomendacion;
+import org.example.tfgbackend.Model.Usuario;
 import org.example.tfgbackend.Services.RecomendacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -35,7 +40,7 @@ public class RecomendacionController {
             if(recomendacion.isPresent()){
                 return ResponseEntity.ok(recomendacion);
             }else{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recomendacion no encontrada");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recomendación no encontrada");
             }
         }catch (InterruptedException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -43,8 +48,28 @@ public class RecomendacionController {
     }
 
     @PostMapping
-    public ResponseEntity<Recomendacion> save(@Valid @RequestBody Recomendacion recomendacion) {
-        return ResponseEntity.ok(recomendacionService.save(recomendacion));
+    public ResponseEntity<?> save(@Valid @RequestBody RecomendacionDTO recomendacionDTO ) {
+        try {
+            if (recomendacionService.existsByUsuarioAndPelicula(recomendacionDTO.getUsuario_id(), recomendacionDTO.getPelicula_id())) {
+                return ResponseEntity.ok("Ya has recomendado esta película.");
+            }
+            Recomendacion recomendacion = new Recomendacion();
+
+            Usuario usuario = new Usuario();
+            usuario.setId(recomendacionDTO.getUsuario_id());
+
+            Pelicula pelicula = new Pelicula();
+            pelicula.setId(recomendacionDTO.getPelicula_id());
+
+            recomendacion.setUsuario(usuario);
+            recomendacion.setPelicula(pelicula);
+
+            recomendacionService.save(recomendacion);
+
+            return ResponseEntity.ok("Recomendación agregada correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al hacer recomendación: " + e.getMessage());
+        }
     }
 
     @PutMapping
@@ -58,7 +83,7 @@ public class RecomendacionController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Integer id) {
         Optional<Recomendacion> recomendacion= recomendacionService.findById(id);
         if(recomendacion.isPresent()){
@@ -67,6 +92,12 @@ public class RecomendacionController {
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recomendacion no encontrada");
         }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> delete(@RequestParam Integer usuario_id, @RequestParam String pelicula_id) {
+        recomendacionService.deleteByUsuarioAndPelicula(usuario_id, pelicula_id);
+        return ResponseEntity.ok("Recomencdación eliminada");
     }
 
 }
