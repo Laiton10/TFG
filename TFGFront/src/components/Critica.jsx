@@ -1,14 +1,19 @@
-    import React, { useEffect, useState } from 'react'
-    import { useParams } from 'react-router-dom';
-    import { getMovieById } from '../services/movie.service';
-    import "../styles/components/Critica.css"
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import { getMovieById } from '../services/movie.service';
+import "../styles/components/Critica.css"
+import { getUser } from '../services/usuario.service';
+import { addCritica } from '../services/critica.service';
 
     const Critica = () => {
 
         const[movie, setMovie]= useState(null);
+        const[user, setUser]= useState(null);
         const [texto, setTexto] = useState(null);
         const [puntuacion, setPuntuacion] = useState(5);
+        const [mensaje, setMensaje] = useState(null);
         const {id}= useParams();
+        const navigate= useNavigate();
 
         useEffect(() => {
          const getPelicula = async () => {
@@ -40,9 +45,38 @@
             getPelicula();
         }, [id]);
 
-        const handleSubmit= (()=>{
+        useEffect(() => {
+            const cargarUser= async() =>{
+                const usuario= await getUser();
+                setUser(usuario);
+            }
+            cargarUser();
+        }, []);
 
-        })
+        const handleSubmit= async (e)=>{
+            e.preventDefault();
+            console.log(movie.id, user.id, texto, puntuacion);
+            const resultado = await addCritica(movie.id, user.id, texto, puntuacion);
+            if(resultado){
+                navigate(`/usuario/${user.nickname}`, {
+                    state: { mensaje: 'Crítica publicada correctamente' }
+                });
+            }else{
+                setMensaje('Error al publicar la crítica');
+            }
+        };
+
+        useEffect(() => {
+          if (mensaje) {
+            const timer = setTimeout(() => {
+              setMensaje(null);
+            }, 3000);
+        
+            return () => clearTimeout(timer);
+          }
+        }, [mensaje]);
+
+
 
 
         if (!movie) {

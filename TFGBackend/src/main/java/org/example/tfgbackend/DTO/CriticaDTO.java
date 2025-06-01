@@ -1,9 +1,12 @@
 package org.example.tfgbackend.DTO;
 
+import java.math.BigDecimal;
+
 public class CriticaDTO {
     public String pelicula_id;
     public Integer usuario_id;
     public String comentario;
+    public Integer puntuacion;
 
     public String getPelicula_id() {
         return pelicula_id;
@@ -27,5 +30,12 @@ public class CriticaDTO {
 
     public void setComentario(String comentario) {
         this.comentario = comentario;
+    }
+
+    public Integer getPuntuacion() {
+        return puntuacion;
+    }
+    public void setPuntuacion(Integer puntuacion) {
+        this.puntuacion = puntuacion;
     }
 }

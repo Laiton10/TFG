@@ -34,7 +34,7 @@ public class Critica {
     private String comentario;
 
     @Column(name = "puntuacion", precision = 2, scale = 1)
-    private BigDecimal puntuacion;
+    private Integer puntuacion;
 
     @ColumnDefault("curdate()")
     @Column(name = "fecha")
@@ -72,11 +72,11 @@ public class Critica {
         this.comentario = comentario;
     }
 
-    public BigDecimal getPuntuacion() {
+    public Integer getPuntuacion() {
         return puntuacion;
     }
 
-    public void setPuntuacion(BigDecimal puntuacion) {
+    public void setPuntuacion(Integer puntuacion) {
         this.puntuacion = puntuacion;
     }
 

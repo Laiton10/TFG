@@ -5,11 +5,14 @@ import { getFavoritosUsuario } from '../services/favorito.service';
 import { getMovieById } from '../services/movie.service';
 import Image from '../assets/images/profile.png';
 import '../styles/components/PublicProfileCard.css';
+import { useLocation } from 'react-router-dom';
 
 const PublicProfileCard = ({ nickname }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(false);
   const[movies, setMovies]= useState([]);
+  const [mensaje, setMensaje] = useState(null);
+  const location = useLocation();
   const { upload } = useUploadImage(); 
 
   const refreshUser = useCallback(async () => {
@@ -63,7 +66,15 @@ const PublicProfileCard = ({ nickname }) => {
       getFavoritos();
     }, [user]);
 
+     useEffect(() => {
+        if (location.state?.mensaje) {
+            setMensaje(location.state.mensaje);
 
+            // Limpia el mensaje después de unos segundos
+            const timer = setTimeout(() => setMensaje(null), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [location.state]);
 
   if (error) return <p>Usuario no encontrado</p>;
   if (!user) return <p>Cargando perfil...</p>;
@@ -90,8 +101,11 @@ const PublicProfileCard = ({ nickname }) => {
  
   return (
     <div className="container">
-
-    
+       {mensaje && (
+                <div className="mensaje-flotante">
+                    {mensaje}
+                </div>
+            )}
     <div className="public-profile-card">
       <img
         src={

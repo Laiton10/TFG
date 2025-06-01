@@ -25,6 +25,7 @@
   font-weight: bold;
   text-align: center;
   margin-bottom: 25px;
+  max-width: 320px;
   background: linear-gradient(90deg, #fff8dc, #ffcc00, #d4af37);
   background-size: 200% auto;
   color: transparent;
@@ -46,6 +47,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  position: relative;
+  top: 50px;
 }
 
 .rating-range {
@@ -54,7 +57,7 @@
   gap: 15px;
   font-size: 18px;
   font-weight: bold;
-  color: #f1fe00;
+  color: var(--color-hover);
 }
 
 .range-wrapper {
@@ -69,19 +72,10 @@
   height: 6px;
   border-radius: 3px;
   background-color: #ccc;
-  accent-color: #f1fe00;
+  accent-color: var(--color-hover);
   cursor: pointer;
 }
 
-/* Control del aspecto del 'thumb' del range */
-.rating-range input[type="range"]::-webkit-slider-thumb {
-  width: 18px;
-  height: 18px;
-  background-color: #f1fe00;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-}
 
 .puntuacion-num {
   font-size: 20px;
@@ -98,18 +92,19 @@
   background-color: #1e2538;
   color: white;
   font-size: 16px;
-  padding: 16px;
+  padding: 20px;
   border: none;
   border-radius: 8px;
-  min-height: 200px;
+  width: 320px;
+  min-height: 350px;
   resize: vertical;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 0 6px rgba(0.5, 0.5, 0.5, 0.8);
 }
 
 .formCritica button {
   align-self: flex-start;
   padding: 12px 24px;
-  background-color: #f1fe00;
+  background-color: white;
   color: black;
   font-size: 16px;
   font-weight: bold;
@@ -120,5 +115,17 @@
 }
 
 .formCritica button:hover {
-  background-color: #cbe048;
+  background-color: var(--color-hover);
 }
+
+.mensaje-flotante {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-bg-register);
+    color: white;   
+    padding: 12px 20px;
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    box-shadow: 0 0 12px var(--color-hover);
+  }

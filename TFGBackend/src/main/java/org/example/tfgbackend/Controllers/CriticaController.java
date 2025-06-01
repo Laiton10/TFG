@@ -60,17 +60,17 @@ public class CriticaController {
             Pelicula pelicula = new Pelicula();
             pelicula.setId(criticaDTO.getPelicula_id());
 
-
-
             critica.setUsuario(usuario);
             critica.setPelicula(pelicula);
             critica.setComentario(criticaDTO.getComentario());
+            critica.setPuntuacion(criticaDTO.getPuntuacion());
             critica.setFecha(LocalDate.now());
 
             criticaService.save(critica); 
 
             return ResponseEntity.ok("Crítica insertada correctamente");
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al insertar la crítica: " + e.getMessage());
         }
 
