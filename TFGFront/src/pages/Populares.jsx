@@ -51,12 +51,12 @@
       movie.primaryTitle.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
-    if (loading) {
-      return (
-        <div className="loading">
-          <h2>Cargando películas...</h2>
-        </div>
-      );
+     if (loading) {
+        return (
+            <div className="loading-container">
+                <div className="spinner" />
+            </div>
+        );
     }
 
     return (

@@ -5,7 +5,7 @@ import Image from "../assets/images/profile.png";
 
 const SearchUserCard = ({ usuario }) => {
   return (
-    <Link to={`/usuario/${usuario.nickname}`} className="user-card-link">
+    <Link to={`/portalFilme/${usuario.nickname}`} className="user-card-link">
       <div className="user-card">
         <div className="user-info">
           <img 

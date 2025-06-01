@@ -48,7 +48,7 @@ function App() {
         <Route path='/register' element={<Register/>}/>
         <Route path="/movie/:title" element={<MovieDetail/>} />
         <Route path='/buscar' element={<Buscar/>}/>
-        <Route path='/usuario/:nickname' element={<PublicProfile/>}/>
+        <Route path='/portalFilme/:nickname' element={<PublicProfile/>}/>
         <Route path='/miLista' element={<MiLista/>}/>
         <Route path='/critica/:id' element={<Critica/>}/>
       </Routes>

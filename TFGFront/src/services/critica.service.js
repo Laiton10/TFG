@@ -28,3 +28,40 @@ export const addCritica = async (idPeli, userId, texto, puntuacion) => {
     return null;
   }
 };
+
+export const deleteCritica= async (idPeli, user) => {
+  try {
+    const response = await fetch(`${baseUrl}?usuario_id=${user.id}&pelicula_id=${idPeli}`, { //el controller espera un requestParam
+      method: 'DELETE'
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al eliminar la crítica');
+    }
+    const data = await response.text();
+    return data;
+  } catch (error) {
+    console.error("Error al eliminar la crítica:", error);
+    return null;
+  }
+};
+
+export const getCriticasUsuario= async (usuario_id) =>{
+    try {
+      const response = await fetch(`${baseUrl}/getCriticas/${usuario_id}`, {
+        method: 'GET',
+      });
+  
+      if (!response.ok) {
+        const msg = "Este usuario no tiene críticas";
+        return msg;
+      }
+  
+      const data = await response.json();
+      return data;
+  
+    } catch (error) {
+      console.error("Error al obtener las críticas del usuario:", error);
+      return null;
+    }
+  };

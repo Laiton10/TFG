@@ -5,10 +5,7 @@ import jakarta.validation.Valid;
 import org.checkerframework.checker.units.qual.C;
 import org.example.tfgbackend.DTO.CriticaDTO;
 import org.example.tfgbackend.DTO.FavoritoDTO;
-import org.example.tfgbackend.Model.Critica;
-import org.example.tfgbackend.Model.Favorito;
-import org.example.tfgbackend.Model.Pelicula;
-import org.example.tfgbackend.Model.Usuario;
+import org.example.tfgbackend.Model.*;
 import org.example.tfgbackend.Services.CriticaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -47,6 +44,12 @@ public class CriticaController {
         }catch (InterruptedException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
+    }
+
+    @GetMapping("getCriticas/{id}")
+    public ResponseEntity<?> getCriticasByUsuario(@PathVariable("id") Integer usuario_id) {
+        List<Critica> criticas = criticaService.getCriticasByUsuarioId(usuario_id);
+        return ResponseEntity.ok(criticas);
     }
 
     @PostMapping

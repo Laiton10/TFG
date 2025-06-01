@@ -56,16 +56,14 @@ const MiLista = () => {
         getFavoritos();
       }, [user]);
   
-
-
-  if (loading) {
+ if (loading) {
         return (
-          <div className="loading">
-            <h2>Cargando películas...</h2>
-          </div>
+            <div className="loading-container">
+                <div className="spinner" />
+            </div>
         );
-      }
-  
+    }
+    
       return (
         <div>
           <div className="image-grid">

@@ -1,20 +1,25 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { searchUserByNickname } from '../services/usuario.service';
+import { getUser, searchUserByNickname } from '../services/usuario.service';
 import { useUploadImage } from '../services/imageUpload.service';
 import { getFavoritosUsuario } from '../services/favorito.service';
 import { getMovieById } from '../services/movie.service';
 import Image from '../assets/images/profile.png';
 import '../styles/components/PublicProfileCard.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import { getRecomendacionesUsuario } from '../services/recomendacion.service';
 
 const PublicProfileCard = ({ nickname }) => {
   const [user, setUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const [error, setError] = useState(false);
-  const[movies, setMovies]= useState([]);
+  const[moviesFavoritas, setMoviesFavoritas]= useState([]);
+  const[moviesRecomendadas, setMoviesRecomendadas]= useState([]);
   const [mensaje, setMensaje] = useState(null);
   const location = useLocation();
   const { upload } = useUploadImage(); 
+  const { nickname: nicknameEnUrl } = useParams();
 
+  //Este obtiene el usuario desde el nickname(puede ser o no el usuario en sesión)
   const refreshUser = useCallback(async () => {
     const user = await searchUserByNickname(nickname);
     if (user) {
@@ -30,6 +35,17 @@ const PublicProfileCard = ({ nickname }) => {
     refreshUser();
   }, [refreshUser]);
 
+  //este obtiene el usuario en sesión para poder cambiar o no la imagen
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      const u = await getUser();
+      setCurrentUser(u);
+    };
+    fetchCurrentUser();
+  }, []);
+
+
+  //Obtener favoritos del usuario
    useEffect(() => {
       const getFavoritos = async () => {
         if (!user?.id) return;
@@ -57,13 +73,50 @@ const PublicProfileCard = ({ nickname }) => {
 
             // Guardamos el cache actualizado en localStorage
             localStorage.setItem('topMovies', JSON.stringify(topMovies));
-            setMovies(pelis);
+            setMoviesFavoritas(pelis);
           } catch (error) {
             console.error("Error al obtener favoritos:", error);
           }
       };
 
       getFavoritos();
+    }, [user]);
+
+    //Obtener recomendaciones del usuario
+     useEffect(() => {
+      const getRecomendaciones = async () => {
+        if (!user?.id) return;
+
+          const storedMovies = localStorage.getItem('topMovies');
+          let topMovies = storedMovies ? JSON.parse(storedMovies) : [];
+
+          try {
+            const recomendaciones = await getRecomendacionesUsuario(user.id);
+
+            // Verificar si ya están todas en cache
+            const pelis = await Promise.all(
+            recomendaciones.map(async (recomendacion) => {
+              const cached = topMovies.find((m) => m.id === recomendacion.pelicula.id);
+
+              if (cached) {
+                return cached;
+              } else {
+                const peli = await getMovieById(recomendacion.pelicula.id);
+                topMovies.push(peli); // guardar en memoria
+                return peli;
+              }
+            })
+            );
+
+            // Guardamos el cache actualizado en localStorage
+            localStorage.setItem('topMovies', JSON.stringify(topMovies));
+            setMoviesRecomendadas(pelis);
+          } catch (error) {
+            console.error("Error al obtener favoritos:", error);
+          }
+      };
+
+      getRecomendaciones();
     }, [user]);
 
      useEffect(() => {
@@ -121,24 +174,40 @@ const PublicProfileCard = ({ nickname }) => {
         <h2 className='nombre'>{user.nombre}</h2>
         <h4 className='nickname'> @{user.nickname}</h4>
 
-      
-        <input
-          type="file" 
-          accept="image/*"
-          onChange={handleFileChange}
-          style={{ display: 'none' }}
-        />
+      {/* si es el usuario en sesion puede cambiar la imagen sino no */}
+      {currentUser?.nickname === nicknameEnUrl && (
+        <>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+          />
+          <button onClick={handleButtonClick} className="upload-button">
+            Cambiar imagen
+          </button>
+        </>
+      )}
 
-        <button onClick={handleButtonClick} className="upload-button">
-          Cambiar imagen
-        </button> 
      </div>
      </div>
 
      <div className='last-favorites'>
        <h2>Últimos favoritos</h2>
        <div className="favorites-flex">
-          {movies.slice(-6).reverse().map((movie) => (
+          {moviesFavoritas.slice(-6).reverse().map((movie) => (
+            <div key={movie.id} className="favorite-movie">
+              <img src={movie.primaryImage}></img>
+              <h3>{movie.primaryTitle}</h3>
+            </div>
+          ))}
+       </div>
+     </div>
+
+     <div className='last-favorites'>
+       <h2>Últimas Recomendaciones</h2>
+       <div className="favorites-flex">
+          {moviesRecomendadas.slice(-6).reverse().map((movie) => (
             <div key={movie.id} className="favorite-movie">
               <img src={movie.primaryImage}></img>
               <h3>{movie.primaryTitle}</h3>

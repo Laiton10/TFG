@@ -1,5 +1,6 @@
 package org.example.tfgbackend.Services;
 
+import org.example.tfgbackend.Model.Favorito;
 import org.example.tfgbackend.Model.Recomendacion;
 import org.example.tfgbackend.Repository.RecomendacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,10 @@ public class RecomendacionService {
     }
     public Recomendacion save(Recomendacion recomendacion){
         return recomendacionRepository.save(recomendacion);
+    }
+
+    public List<Recomendacion> getRecomendacionesByUsuarioId(Integer usuario_id) {
+        return recomendacionRepository.findByUsuarioId(usuario_id);
     }
 
     public boolean existsByUsuarioAndPelicula(Integer usuarioId, String peliculaId) {

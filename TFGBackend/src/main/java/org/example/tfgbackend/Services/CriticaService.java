@@ -1,6 +1,7 @@
 package org.example.tfgbackend.Services;
 
 import org.example.tfgbackend.Model.Critica;
+import org.example.tfgbackend.Model.Recomendacion;
 import org.example.tfgbackend.Repository.CriticasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ public class CriticaService {
     public Optional<Critica> findById(Integer id){
         return criticaRepository.findById(id);
     }
+
+    public List<Critica> getCriticasByUsuarioId(Integer usuario_id) {
+        return criticaRepository.findByUsuarioId(usuario_id);
+    }
+
     public Critica save(Critica critica){
         return criticaRepository.save(critica);
     }

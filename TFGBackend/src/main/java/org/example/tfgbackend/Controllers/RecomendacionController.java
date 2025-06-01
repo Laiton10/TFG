@@ -47,6 +47,12 @@ public class RecomendacionController {
         }
     }
 
+    @GetMapping("getRecomendaciones/{id}")
+    public ResponseEntity<?> getRecomendacionesByUsuario(@PathVariable("id") Integer usuario_id) {
+        List<Recomendacion> recomendaciones = recomendacionService.getRecomendacionesByUsuarioId(usuario_id);
+        return ResponseEntity.ok(recomendaciones);
+    }
+
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody RecomendacionDTO recomendacionDTO ) {
         try {

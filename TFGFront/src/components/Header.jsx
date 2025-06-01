@@ -3,10 +3,12 @@ import logo from '../resources/FilMe-removebg-preview.png';
 import principalData from '../data/principal.json';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/components/Header.css';
+import { getUser } from '../services/usuario.service';
 
 function Header({ token }) {
   const [links, setLinks] = useState({});
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const [menuResponsiveAbierto, setMenuResponsiveAbierto] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -22,6 +24,14 @@ function Header({ token }) {
   useEffect(() => {
     const linkObject = principalData[0];
     setLinks(linkObject);
+  }, []);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const usuario = await getUser();
+      setUser(usuario);
+    };
+    fetchUser();
   }, []);
 
   const handleLinkClick = (e, route) => {
@@ -64,17 +74,6 @@ function Header({ token }) {
               </Link>
             </li>
           ))}
-          {token && (
-            <li>
-              <Link
-                to="/ajustes"
-                className="responsive-header-link"
-                onClick={() => setMenuResponsiveAbierto(false)}
-              >
-                Ajustes y pedidos
-              </Link>
-            </li>
-          )}
         </ul>
       </div>
 
@@ -84,9 +83,20 @@ function Header({ token }) {
           <div className="logoLinks">
             <img className="logo" src={logo} alt="logo" />
             <ul className="nav-links">
-            {Object.keys(links).map((key) => (
-              <li key={key}><Link onClick={(e) => handleLinkClick(e,key) } to={`/${key}`}>{links[key]}</Link></li>
-            ))}
+             {Object.keys(links).map((key) => {
+              const path =
+                key === "portalFilMe" && user
+                  ? `/portalFilMe/${user.nickname}`
+                  : `/${key}`;
+
+              return (
+                <li key={key}>
+                  <Link onClick={(e) => handleLinkClick(e, key)} to={path}>
+                    {links[key]}
+                  </Link>
+                </li>
+              );
+            })}
             </ul>
           </div>
 
