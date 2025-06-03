@@ -58,7 +58,7 @@ import { addCritica } from '../services/critica.service';
             console.log(movie.id, user.id, texto, puntuacion);
             const resultado = await addCritica(movie.id, user.id, texto, puntuacion);
             if(resultado){
-                navigate(`/usuario/${user.nickname}`, {
+                navigate(`/portalFilme/${user.nickname}`, {
                     state: { mensaje: 'Crítica publicada correctamente' }
                 });
             }else{
@@ -84,6 +84,7 @@ import { addCritica } from '../services/critica.service';
     }
         
     return (
+        <>
         <div className="peliculaCritca">
         <div className='tituloPeliCritica'>
             <h2>{movie ? movie.primaryTitle : "Cargando..."}</h2>
@@ -114,6 +115,17 @@ import { addCritica } from '../services/critica.service';
             <button type="submit">Enviar crítica</button>
         </form>
         </div>
+
+        <div>
+            <h2>Críticas de {movie.primaryTitle}</h2>
+             {/*desde el metodo getCriticasPeli() del service se puede obtener la lista de criticas
+            desde ahi acceder a la puntuacion y coemntario y luego con el idPeli obtener
+            la imagen o titulo de la peli */}
+
+        </div>
+
+
+        </>
     )
     }
 

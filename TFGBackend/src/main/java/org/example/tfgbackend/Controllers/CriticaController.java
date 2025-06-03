@@ -52,6 +52,12 @@ public class CriticaController {
         return ResponseEntity.ok(criticas);
     }
 
+    @GetMapping("getCriticasPeli/{id}")
+    public ResponseEntity<?> getCriticasByPelicula(@PathVariable("id") String pelicula_id) {
+        List<Critica> criticas = criticaService.getCriticasByPeliId(pelicula_id);
+        return ResponseEntity.ok(criticas);
+    }
+
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody CriticaDTO criticaDTO ) {
         try{

@@ -23,6 +23,10 @@ public class CriticaService {
         return criticaRepository.findByUsuarioId(usuario_id);
     }
 
+    public List<Critica> getCriticasByPeliId(String pelicula_id) {
+        return criticaRepository.findByPeliculaId(pelicula_id);
+    }
+
     public Critica save(Critica critica){
         return criticaRepository.save(critica);
     }

@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface CriticasRepository extends JpaRepository<Critica, Integer> {
     List<Critica> findByUsuarioId(Integer usuario_id);
+    List<Critica> findByPeliculaId(String pelicula_id);
 }

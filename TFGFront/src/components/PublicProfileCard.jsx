@@ -5,7 +5,7 @@ import { getFavoritosUsuario } from '../services/favorito.service';
 import { getMovieById } from '../services/movie.service';
 import Image from '../assets/images/profile.png';
 import '../styles/components/PublicProfileCard.css';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { getRecomendacionesUsuario } from '../services/recomendacion.service';
 
 const PublicProfileCard = ({ nickname }) => {
@@ -196,10 +196,10 @@ const PublicProfileCard = ({ nickname }) => {
        <h2>Últimos favoritos</h2>
        <div className="favorites-flex">
           {moviesFavoritas.slice(-6).reverse().map((movie) => (
-            <div key={movie.id} className="favorite-movie">
-              <img src={movie.primaryImage}></img>
+            <Link to={`/movie/${movie.primaryTitle}`} key={movie.id} className="favorite-movie">
+              <img src={movie.primaryImage} alt={movie.primaryTitle} />
               <h3>{movie.primaryTitle}</h3>
-            </div>
+            </Link>
           ))}
        </div>
      </div>
@@ -208,14 +208,17 @@ const PublicProfileCard = ({ nickname }) => {
        <h2>Últimas Recomendaciones</h2>
        <div className="favorites-flex">
           {moviesRecomendadas.slice(-6).reverse().map((movie) => (
-            <div key={movie.id} className="favorite-movie">
-              <img src={movie.primaryImage}></img>
+            <Link to={`/movie/${movie.primaryTitle}`} key={movie.id} className="favorite-movie">
+              <img src={movie.primaryImage} alt={movie.primaryTitle} />
               <h3>{movie.primaryTitle}</h3>
-            </div>
+            </Link>
           ))}
        </div>
      </div>
 
+          {/*desde el metodo getCriticasUsuario() del service se puede obtener la lista de criticas
+            desde ahi acceder a la puntuacion y coemntario y luego con el idPeli obtener
+            la imagen o titulo de la peli */}
     
     </div>
   );

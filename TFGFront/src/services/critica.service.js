@@ -15,8 +15,6 @@ export const addCritica = async (idPeli, userId, texto, puntuacion) => {
         puntuacion: puntuacion
       })
     });
-    
-    console.log("holaa");
     if (!response.ok) {
       throw new Error('Error al añadir la crítica');
     }
@@ -62,6 +60,26 @@ export const getCriticasUsuario= async (usuario_id) =>{
   
     } catch (error) {
       console.error("Error al obtener las críticas del usuario:", error);
+      return null;
+    }
+  };
+
+  export const getCriticasPeli= async (pelicula_id) =>{
+    try {
+      const response = await fetch(`${baseUrl}/getCriticasPeli/${pelicula_id}`, {
+        method: 'GET',
+      });
+      
+      if (!response.ok) {
+        const msg = "Esta película no tiene críticas";
+        return msg;
+      }
+  
+      const data = await response.json();
+      return data;
+  
+    } catch (error) {
+      console.error("Error al obtener las críticas de la película:", error);
       return null;
     }
   };

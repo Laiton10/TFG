@@ -10,6 +10,7 @@ import Buscar from './pages/Buscar';
 import MovieDetail from './pages/MovieDetail';
 import PublicProfile from './pages/PublicProfile';
 import MiLista from './pages/MiLista';
+import PrivateRoute from './components/PrivateRoute';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { getTopMovies } from './services/movie.service';
@@ -39,20 +40,22 @@ function App() {
 
   return(
     <>
-      <Header token={token}/>
+      <Header token={token} />
       <Routes>
+        {/* Rutas públicas */}
         <Route path="/" element={<Principal token={token} />} />
-        <Route path="/login" element={<Login setToken={setToken}/>}/>
-        <Route path="/perfil" element={<Perfil />} /> 
-        <Route path='/populares' element={<Populares/>}/>
-        <Route path='/register' element={<Register/>}/>
-        <Route path="/movie/:title" element={<MovieDetail/>} />
-        <Route path='/buscar' element={<Buscar/>}/>
-        <Route path='/portalFilme/:nickname' element={<PublicProfile/>}/>
-        <Route path='/miLista' element={<MiLista/>}/>
-        <Route path='/critica/:id' element={<Critica/>}/>
+        <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route path="/register" element={<Register />} />
+        {/* Rutas protegidas */}
+        <Route path="/perfil" element={<PrivateRoute><Perfil /></PrivateRoute>} />
+        <Route path="/populares" element={<PrivateRoute><Populares /></PrivateRoute>} />
+        <Route path="/buscar" element={<PrivateRoute><Buscar /></PrivateRoute>} />
+        <Route path="/movie/:title" element={<PrivateRoute><MovieDetail /></PrivateRoute>} />
+        <Route path="/portalFilme/:nickname" element={<PrivateRoute><PublicProfile /></PrivateRoute>} />
+        <Route path="/miLista" element={<PrivateRoute><MiLista /></PrivateRoute>} />
+        <Route path="/critica/:id" element={<PrivateRoute><Critica /></PrivateRoute>} />
       </Routes>
-      <Footer/>
+      <Footer />
     </>
   )
 }

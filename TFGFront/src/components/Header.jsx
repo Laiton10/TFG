@@ -41,6 +41,13 @@ function Header({ token }) {
     }
   };
 
+  const handlePortalClick = (e) => {
+  e.preventDefault();
+  if (user?.nickname) {
+    navigate(`/portalFilMe/${user.nickname}`);
+  }
+};
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -84,14 +91,16 @@ function Header({ token }) {
             <img className="logo" src={logo} alt="logo" />
             <ul className="nav-links">
              {Object.keys(links).map((key) => {
-              const path =
-                key === "portalFilMe" && user
-                  ? `/portalFilMe/${user.nickname}`
-                  : `/${key}`;
-
-              return (
+              if (key === "portalFilMe") {
+                return (
+                  <li key={key}>
+                    <a href="#" onClick={handlePortalClick}>{links[key]}</a>
+                  </li>
+                );
+              }
+                return (
                 <li key={key}>
-                  <Link onClick={(e) => handleLinkClick(e, key)} to={path}>
+                  <Link onClick={(e) => handleLinkClick(e, key)} to={`/${key}`}>
                     {links[key]}
                   </Link>
                 </li>
@@ -105,7 +114,7 @@ function Header({ token }) {
               <>
                 <div className="imagenMenu" onClick={clickMouse}>
                   <img
-                    src="/account.svg"
+                    src="/account.png"
                     alt="Icono de usuario"
                     className="iconoUsuario"
                   />
