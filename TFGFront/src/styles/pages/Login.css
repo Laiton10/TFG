@@ -62,6 +62,18 @@ form {
     color: var(--color-text);
 }
 
+.mensaje-flotante {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-bg-register);
+    color: white;   
+    padding: 12px 20px;
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    box-shadow: 0 0 12px var(--color-hover);
+  }
+
 @media(max-width: 815px) {
     .password, .nickname {
         width: 70%;

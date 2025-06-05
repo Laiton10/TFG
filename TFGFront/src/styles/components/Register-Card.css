@@ -79,6 +79,13 @@
     margin-bottom: 1rem;
 }
 
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 1px;
+  min-width: 400px;
+}
+
 @media(max-width: 815px){
     .register-button{
         width: 120px;

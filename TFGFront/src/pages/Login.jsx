@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { login } from '../services/usuario.service';
 import '../styles/pages/Login.css';
 
 function Login({setToken}) {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
+  const [mensaje, setMensaje]= useState('');
+  const location = useLocation();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -16,12 +18,27 @@ function Login({setToken}) {
       setToken(token);
       navigate('/');
     } else {
-      alert('Credenciales incorrectas');
+      setMensaje('Credenciales incorrectas');
     }
   };
 
+  useEffect(() => {
+          if (location.state?.mensaje) {
+              setMensaje(location.state.mensaje);
+  
+              // Limpia el mensaje después de unos segundos
+              const timer = setTimeout(() => setMensaje(null), 3000);
+              return () => clearTimeout(timer);
+          }
+      }, [location.state]);
+
   return (
     <div className="containerLogin">
+      {mensaje && (
+                <div className="mensaje-flotante">
+                    {mensaje}
+                </div>
+            )}
       <form onSubmit={handleLogin}>
         <div className="nickname">
           <label htmlFor="nicknameLogin">Nickname:</label>
@@ -45,6 +62,9 @@ function Login({setToken}) {
         </div>
         <button type="submit" className="botonLogin">Iniciar sesión</button>
       </form>
+      {mensaje && (
+            <div className="mensaje-flotante">{mensaje}</div>
+          )}
     </div>
   );
 }

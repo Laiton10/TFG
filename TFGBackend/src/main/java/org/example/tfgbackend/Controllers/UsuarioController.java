@@ -103,7 +103,9 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        Optional<Usuario> usuario = usuarioService.login(request.getNickname(), request.getPassword());
+        String nicknameNormalizado = request.getNickname().toLowerCase();
+        Optional<Usuario> usuario = usuarioService.login(nicknameNormalizado, request.getPassword());
+
         if (usuario.isPresent()) {
             String token = JwtUtil.generateToken(usuario.get().getNickname());
             return ResponseEntity.ok().body(Map.of("token", token));
@@ -111,6 +113,7 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
         }
     }
+
     //Cuando haces una petición HTTP con un token de autenticación, se lo mandas al servidor en la cabecera
     //Authorization: Es la cabecera estándar para enviar credenciales.
     //Bearer: Tipo de autenticación Bearer Token, que significa "portador". Es decir, quien posee ese token está autenticado.

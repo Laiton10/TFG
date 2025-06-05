@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Optional<Usuario> findByEmail(String email);
     Optional<Usuario> findByNickname(String nickname);
+    boolean existsByNickname(String nickname);
+    boolean existsByEmail(String email);
 
     @Query("SELECT u FROM Usuario u WHERE LOWER(u.nickname) LIKE LOWER(CONCAT('%', :nickname, '%'))")
     List<Usuario> findUser(@Param("nickname") String nickname);

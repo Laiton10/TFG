@@ -2,11 +2,9 @@ package org.example.tfgbackend.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.ColumnDefault;
-import com.fasterxml.jackson.annotation.JsonIgnore;//Evita que la contraseña se devuelva en las respuestas
+import org.checkerframework.common.aliasing.qual.Unique;
 import java.time.LocalDate;
 
 @Entity
@@ -19,13 +17,14 @@ public class Usuario {
 
     @Size(max = 100)
     @NotBlank(message = "El campo nombre es obligatorio")
-    @Pattern(regexp = "^[a-zA-Z]*$", message = "El nombre solo puede contener caracteres alfabéticos")
+    @Pattern(regexp = "^[a-zA-Záéíóúñ ]*$", message = "El nombre solo puede contener caracteres alfabéticos")
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
     @Size(max = 50)
     @NotBlank(message = "El nickname es obligatorio")
     @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "El nickname solo puede contener caracteres alfanuméricos")
+    @Unique()
     @Column(name = "nickname", nullable = false, length = 50)
     private String nickname;
 

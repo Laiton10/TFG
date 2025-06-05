@@ -1,25 +1,32 @@
 const baseUrl = 'http://localhost:8080/usuarios';
 
-export const registerUser= async(user) =>{
-    try {
-       const response= await fetch(`${baseUrl}/register`,{
-         method: 'POST',
-         headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
-       });
-       if(!response.ok){
-          throw new Error('Error al registrar el usuario');
-       }
-       const data = await response.json();
-       console.log(data);
-       return data; // usuario registrado
-    } catch (error) { 
-      console.error("Error al hacer el registro:", error);  
-      return null;
+export const registerUser = async (user) => {
+  try {
+    const response = await fetch(`${baseUrl}/register`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(user)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      // Si hay errores de validación, devuélvelos
+      return { success: false, errors: data };
     }
-}
+
+    return { success: true, data };
+  } catch (error) {
+    console.error("Error al hacer el registro:", error);
+    return {
+      success: false,
+      errors: { general: "Error inesperado en el registro. Intenta más tarde." }
+    };
+  }
+};
+
 
 
 export const login = async (nickname, password) => {

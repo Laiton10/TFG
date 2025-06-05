@@ -1,5 +1,6 @@
 package org.example.tfgbackend.Services;
 
+import org.example.tfgbackend.Config.CustomValidationException;
 import org.example.tfgbackend.DTO.NicknameUpdate;
 import org.example.tfgbackend.Model.Usuario;
 import org.example.tfgbackend.Repository.UsuarioRepository;
@@ -47,8 +48,16 @@ public class UsuarioService {
     }
 
     public Usuario save(Usuario usuario) {
+        usuario.setNickname(usuario.getNickname().toLowerCase());
+        usuario.setEmail(usuario.getEmail().toLowerCase());
         String hashedPassword = passwordEncoder.encode(usuario.getPassword());
         usuario.setPassword(hashedPassword);
+        if (usuarioRepository.existsByNickname(usuario.getNickname())) {
+            throw new CustomValidationException("nickname", "Ese nickname ya está en uso");
+        }
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+            throw new CustomValidationException("email", "Ese email ya está en uso");
+        }
         usuario.setFechaRegistro(LocalDate.now());
         return usuarioRepository.save(usuario);
     }
