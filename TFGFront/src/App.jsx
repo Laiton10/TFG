@@ -53,7 +53,7 @@ function App() {
         <Route path="/movie/:title" element={<PrivateRoute><MovieDetail /></PrivateRoute>} />
         <Route path="/portalFilme/:nickname" element={<PrivateRoute><PublicProfile /></PrivateRoute>} />
         <Route path="/miLista" element={<PrivateRoute><MiLista /></PrivateRoute>} />
-        <Route path="/critica/:id" element={<PrivateRoute><Critica /></PrivateRoute>} />
+        <Route path="/critica/:id/:nickname" element={<PrivateRoute><Critica /></PrivateRoute>} />
       </Routes>
       <Footer />
     </>

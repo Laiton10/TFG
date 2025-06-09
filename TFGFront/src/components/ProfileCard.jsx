@@ -7,13 +7,6 @@ export const ProfileCard = ({user}) => {
     const [nickname, setNickname] = useState(user.nickname);
     const [mensaje, setMensaje] = useState(null);
 
-/*     const userInfo = [
-        { label: 'Nickname', id: 'nombreUsuario', value: user}, //pongo el prop user como value
-        { label: 'Email', id: 'email', value: 'email'},
-        { label: 'Fecha de registro en la aplicación', id: 'fecha_registro', value: 'fecha'},
-        { label: 'Prueba', id: 'prueba', value: 'prueba'},
-    ] */
-
     const handleUpdate = async () => {
         setMensaje(null);
         const respuesta = await updateNickname({ id: user.id, nickname });
@@ -37,7 +30,15 @@ export const ProfileCard = ({user}) => {
         <div className="profile-card">
             <div className='perfil'>
                 <div className='circulo'>
-                    <p>{nickname.charAt(0).toUpperCase()}</p>
+                    <img
+                        src={
+                            user.imagenPerfil
+                                ? `http://localhost:8080/${user.imagenPerfil}`
+                                : Image
+                            }
+                            className="imagen-perfil"
+                    />
+                   
                 </div>
                 <div className='title'>
                     <p>Información Personal</p>

@@ -53,7 +53,7 @@ const handleRecomendacion = async () => {
 };
 
 const handleCritica = async () => {
-    navigate(`/critica/${movie.imdbId}`)
+    navigate(`/critica/${movie.imdbId}/${user.nickname}`)
 }
     useEffect(() => {
   if (!title) return;

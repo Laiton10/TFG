@@ -32,28 +32,20 @@ function Header({ token }) {
       setUser(usuario);
     };
     fetchUser();
-  }, []);
+  }, [token]);
 
   const handleLinkClick = (e, route) => {
-    if(!token && route.toLowerCase() !== ''){
+    if (!token && route.toLowerCase() !== '') {
       e.preventDefault();
       navigate('/login');
     }
   };
-
-  const handlePortalClick = (e) => {
-  e.preventDefault();
-  if (user?.nickname) {
-    navigate(`/portalFilMe/${user.nickname}`);
-  }
-};
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
     window.location.reload();
   };
-
 
   return (
     <>
@@ -90,22 +82,24 @@ function Header({ token }) {
           <div className="logoLinks">
             <img className="logo" src={logo} alt="logo" />
             <ul className="nav-links">
-             {Object.keys(links).map((key) => {
-              if (key === "portalFilMe") {
+              {Object.keys(links).map((key) => {
+                if (key === "portalFilMe") {
+                  return user?.nickname ? (
+                    <li key={key}>
+                      <Link to={`/portalFilMe/${user.nickname}`}>{links[key]}</Link>
+                    </li>
+                  ) : (
+                    <li key={key}><Link to={"/login"}>Portal FilMe</Link></li>
+                  );
+                }
                 return (
                   <li key={key}>
-                    <a href="#" onClick={handlePortalClick}>{links[key]}</a>
+                    <Link onClick={(e) => handleLinkClick(e, key)} to={`/${key}`}>
+                      {links[key]}
+                    </Link>
                   </li>
                 );
-              }
-                return (
-                <li key={key}>
-                  <Link onClick={(e) => handleLinkClick(e, key)} to={`/${key}`}>
-                    {links[key]}
-                  </Link>
-                </li>
-              );
-            })}
+              })}
             </ul>
           </div>
 
@@ -113,11 +107,7 @@ function Header({ token }) {
             {token ? (
               <>
                 <div className="imagenMenu" onClick={clickMouse}>
-                  <img
-                    src="/account.png"
-                    alt="Icono de usuario"
-                    className="iconoUsuario"
-                  />
+                  <img src="/account.png" alt="Icono de usuario" className="iconoUsuario" />
 
                   {isMenuOpen && (
                     <div className={`menuDesplegable ${isMenuOpen ? 'open' : ''}`}>

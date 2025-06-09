@@ -71,7 +71,8 @@ export const getUser= async() =>{
       }
     });
     if (!response.ok) {
-      throw new Error("Error al obtener el perfil");
+       const errorText = await response.text();
+       throw new Error(`Error al obtener el perfil: ${response.status} - ${errorText}`);
     }
 
     const data = await response.json();

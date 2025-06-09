@@ -7,14 +7,22 @@ import Image from '../assets/images/profile.png';
 import '../styles/components/PublicProfileCard.css';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { getRecomendacionesUsuario } from '../services/recomendacion.service';
+import { getCriticasUsuario } from '../services/critica.service';
 
 const PublicProfileCard = ({ nickname }) => {
   const [user, setUser] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+
   const [error, setError] = useState(false);
+
   const[moviesFavoritas, setMoviesFavoritas]= useState([]);
+  const [favLoaded, setFavLoaded] = useState(false);
+
   const[moviesRecomendadas, setMoviesRecomendadas]= useState([]);
+  const [recLoaded, setRecLoaded] = useState(false);
+
   const [mensaje, setMensaje] = useState(null);
+  const [criticas, setCriticas] = useState([]);
   const location = useLocation();
   const { upload } = useUploadImage(); 
   const { nickname: nicknameEnUrl } = useParams();
@@ -44,7 +52,11 @@ const PublicProfileCard = ({ nickname }) => {
     fetchCurrentUser();
   }, []);
 
-
+  //El flujo funciona así:
+  //1. Primero se obtiene el usuario por nickname
+  //2. Luego se obtienen los favoritos del usuario, hasta que no se cargan todos los favoritos no pasa a ejecutarse el hook de recomendaciones
+  //3. Luego se obtienen las recomendaciones del usuario, hasta que no se cargan todas las recomendaciones no pasa a ejecutarse el hook de críticas
+  //4. Finalmente se obtienen las críticas del usuario
   //Obtener favoritos del usuario
    useEffect(() => {
       const getFavoritos = async () => {
@@ -72,8 +84,10 @@ const PublicProfileCard = ({ nickname }) => {
             );
 
             // Guardamos el cache actualizado en localStorage
-            localStorage.setItem('topMovies', JSON.stringify(topMovies));
+            const clean = topMovies.filter(m => m && m.id != null);
+            localStorage.setItem('topMovies', JSON.stringify(clean));
             setMoviesFavoritas(pelis);
+            setFavLoaded(true);
           } catch (error) {
             console.error("Error al obtener favoritos:", error);
           }
@@ -85,7 +99,7 @@ const PublicProfileCard = ({ nickname }) => {
     //Obtener recomendaciones del usuario
      useEffect(() => {
       const getRecomendaciones = async () => {
-        if (!user?.id) return;
+        if (!user?.id || !favLoaded) return;
 
           const storedMovies = localStorage.getItem('topMovies');
           let topMovies = storedMovies ? JSON.parse(storedMovies) : [];
@@ -109,15 +123,63 @@ const PublicProfileCard = ({ nickname }) => {
             );
 
             // Guardamos el cache actualizado en localStorage
-            localStorage.setItem('topMovies', JSON.stringify(topMovies));
+            const clean = topMovies.filter(m => m && m.id != null);
+            localStorage.setItem('topMovies', JSON.stringify(clean));
             setMoviesRecomendadas(pelis);
+            setRecLoaded(true);
           } catch (error) {
             console.error("Error al obtener favoritos:", error);
           }
       };
 
       getRecomendaciones();
-    }, [user]);
+    }, [user, favLoaded]);
+
+    useEffect(() => {
+      const getMisCriticas = async () => {
+        if (!user?.id || !recLoaded) return;
+
+        const stored = JSON.parse(localStorage.getItem('topMovies') || '[]');
+        let topMovies = Array.isArray(stored)
+          ? stored.filter(m => m && m.id != null)
+          : [];
+
+        try {
+          const data = await getCriticasUsuario(user.id);
+          if (!Array.isArray(data)) {
+            setCriticas([]);
+            return;
+          }
+
+          const detalleCriticas = await Promise.all(
+            data.map(async (c) => {
+              let mov = topMovies.find(m => m.id === c.pelicula.id);
+              if (!mov) {
+                mov = await getMovieById(c.pelicula.id);
+                topMovies.push(mov);
+              }
+              return {
+                id: c.id,  
+                movieId: c.pelicula.id,                  
+                title: mov.primaryTitle,     
+                comentario: c.comentario,    
+                puntuacion: c.puntuacion     
+              };
+            })
+          );
+          const clean = topMovies.filter(m => m && m.id != null);
+          localStorage.setItem('topMovies', JSON.stringify(clean));
+
+          setCriticas(detalleCriticas);
+        } catch (err) {
+          console.error('Error al obtener críticas:', err);
+          setCriticas([]);
+        }
+      };
+
+      getMisCriticas();
+    }, [user, recLoaded]);
+
 
      useEffect(() => {
         if (location.state?.mensaje) {
@@ -219,6 +281,27 @@ const PublicProfileCard = ({ nickname }) => {
           {/*desde el metodo getCriticasUsuario() del service se puede obtener la lista de criticas
             desde ahi acceder a la puntuacion y coemntario y luego con el idPeli obtener
             la imagen o titulo de la peli */}
+      <div className="mis-criticas">
+        <h2>Mis Críticas</h2>
+        <div className="criticas-grid">
+          {criticas.length === 0 ? (
+            <p className="no-criticas">No hay críticas todavía.</p>
+          ) : (
+            criticas.map(c => (
+              <div className="critica-item" key={c.id}>
+                <h3>{c.title}</h3>
+                <p className="critica-text">{c.comentario}</p>
+                <div className="critica-puntuacion-boton">
+                <Link to={`/critica/${c.movieId}/${nicknameEnUrl}`} className="critica-btn">
+                  Ver Crítica
+                </Link>
+                <p className='puntuacion-critica'>Puntuación: {c.puntuacion}</p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
     
     </div>
   );
