@@ -40,7 +40,7 @@ function App() {
 
   return(
     <>
-      <Header token={token} />
+      <Header />
       <Routes>
         {/* Rutas públicas */}
         <Route path="/" element={<Principal token={token} />} />

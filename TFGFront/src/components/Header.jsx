@@ -5,10 +5,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/components/Header.css';
 import { getUser } from '../services/usuario.service';
 
-function Header({ token }) {
+function Header() {
   const [links, setLinks] = useState({});
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [token, setToken]= useState(null)
   const [menuResponsiveAbierto, setMenuResponsiveAbierto] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,13 +27,33 @@ function Header({ token }) {
     setLinks(linkObject);
   }, []);
 
-  useEffect(() => {
-    const fetchUser = async () => {
+useEffect(() => {
+  const fetchUser = async () => {
+    const storedToken = localStorage.getItem('token');
+    setToken(storedToken);
+    if (storedToken) {
       const usuario = await getUser();
       setUser(usuario);
-    };
-    fetchUser();
-  }, [token]);
+    } else {
+      setUser(null);
+    }
+  };
+
+  fetchUser();
+
+  // Escuchar cambios en localStorage (login/logout en cualquier pestaña)
+  const handleStorageChange = () => fetchUser();
+
+  // Escuchar cambios de ruta (por si el token cambia tras login/logout)
+  // location viene de useLocation()
+  // No hace falta añadir location.pathname a las dependencias, porque el useEffect se ejecuta en cada render si lo añades
+  window.addEventListener('storage', handleStorageChange);
+
+  return () => {
+    window.removeEventListener('storage', handleStorageChange);
+  };
+}, [location]);
+
 
   const handleLinkClick = (e, route) => {
     if (!token && route.toLowerCase() !== '') {
