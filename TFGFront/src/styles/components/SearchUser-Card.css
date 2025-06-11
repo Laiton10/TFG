@@ -52,5 +52,5 @@ a{
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--color-border);
-  margin-right: 1.5rem; /* Aumentado desde 1rem */
+  margin-right: 1.5rem;
 }

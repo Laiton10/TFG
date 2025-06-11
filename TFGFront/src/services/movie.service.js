@@ -1,4 +1,4 @@
-import axios from "axios"; //libreria de JS que nos facilita las request a
+import axios from "axios"; //libreria de JS que nos facilita las request
 
 const TOP250_API = "https://imdb236.p.rapidapi.com/api/imdb/top250-movies";
 const GET_BY_ID= "https://imdb236.p.rapidapi.com/api/imdb"
@@ -71,9 +71,7 @@ export const getMovieByTitle = async (title) => {
             if(!response.ok){
             throw new Error(`Error al registrar la película (${response.status})`);
         }
-        console.log("Holaaa")
         const data = await response.text();
-        console.log("Hola data",data);
         return data;
         } catch (error) {
             console.error("Error al hacer el registro:", error);  

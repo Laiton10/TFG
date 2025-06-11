@@ -48,8 +48,6 @@ export const login = async (nickname, password) => {
     }
 
     const data = await response.json();
-    console.log(data);
-    console.log(data.token);
     return data.token;
   } catch (error) {
     console.error("Error al hacer login:", error);
@@ -98,7 +96,6 @@ export const searchUsers = async (nickname) => {
     }
 
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error al buscar usuarios:", error);
@@ -120,7 +117,7 @@ export const searchUserByNickname = async (nickname) => {
     }
 
     const data = await response.json();
-    console.log("Usuario encontrado:", data);
+
     return data;
   } catch (error) {
     console.error("Error al buscar usuario:", error);

@@ -18,7 +18,6 @@ export const addRecomendacion = async (idPeli, user) => {
     }
 
     const data = await response.text();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error al hacer la recomendación:", error);

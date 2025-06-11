@@ -74,7 +74,7 @@
 .infoPeli p {
   display: flex;
   align-items: center;
-  gap: 2.5px; /* Espacio entre el icono y el texto */
+  gap: 2.5px; 
   margin: 0;
   padding: 10px 14px;
   background-color: rgba(255, 255, 255, 0.05);
@@ -136,7 +136,7 @@
 .link-icono::after {
   content: attr(data);
   position: absolute;
-  bottom: 120%; /* encima del icono */
+  bottom: 120%;
   left: 50%;
   transform: translateX(-50%);
   background-color: #333;

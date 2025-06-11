@@ -18,7 +18,6 @@ export const addFavorito = async (idPeli, user) => {
     }
 
     const data = await response.text();
-    console.log("Favorito añadido:", data);
     return data;
   } catch (error) {
     console.error("Error al añadir favorito:", error);
@@ -52,7 +51,7 @@ export const getFavorito = async (usuarioId, peliculaId) => {
     const data = await response.json();
 
     // Si devuelve el objeto de error personalizado con "msg", entonces no es favorito
-    //No queremos que salte el error porque solo es para obtener la información
+    //No queremos que salte un error porque solo es para obtener la información
     if (data.msg === "Favorito no encontrado") {
       return null;
     }

@@ -117,19 +117,17 @@
   }
 
 
-  /**/
   #responsive-nav-icon {
     position: absolute;
     top: 1.5rem;
     left: 1.5rem;
     width: 2rem;
     height: 2rem;
-    display: none; /* Solo visible en responsive */
+    display: none;
     cursor: pointer;
     z-index: 1001;
   }
-  
-  /* Las 3 barritas */
+
   .bar1, .bar2, .bar3 {
     width: 30px;
     height: 3px;
