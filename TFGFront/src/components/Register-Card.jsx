@@ -24,7 +24,7 @@ const handleSubmit = async (e) => {
       state: { mensaje: 'Te has registrado correctamente' }
     });
   } else {
-    setErrors(result.errors); // Mostramos los errores
+    setErrors(result.errors);
     console.log("Errores recibidos del backend:", result.errors);
   }
 };
@@ -56,7 +56,7 @@ useEffect(() => {
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
           />
-          <p className="error">{errors.nombre || ' '}</p> {/* espacio reservado */}
+          <p className="error">{errors.nombre || ' '}</p>
 
           <label htmlFor='nickname'>Nickname</label>
           <input
