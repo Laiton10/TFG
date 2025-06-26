@@ -1,0 +1,14 @@
+site_name: Laica Documentación ## nombre que aparece como título del sitio web
+theme:
+  name: material ## tema visual del sitio
+
+nav: ## estructura de navegación del sitio
+  - Inicio: index.md ## página de inicio del sitio
+  - Arquitectura: arquitectura.md ## página de arquitectura del sitio
+  - Manual Técnico: manual_tecnico.md ## página del manual técnico del sitio
+
+
+extra:
+  social:
+    - icon: fontawesome/brands/github ## icono de GitHub
+      link: https://github.com/Laiton10/TFG ## enlace al repositorio de GitHub
